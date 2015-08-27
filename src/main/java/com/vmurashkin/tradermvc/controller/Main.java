@@ -33,7 +33,7 @@ public class Main {
             System.out.println(share.getTicker() + ", " + share.getQuantity());
         }
 
-        // just fot test
+        // just fot test 2
 
 
 //        Query query = em.createQuery("SELECT share_id, quantity FROM trader.portfolio where user_id = 1")
