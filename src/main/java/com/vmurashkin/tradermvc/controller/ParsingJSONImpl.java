@@ -25,7 +25,7 @@ public class ParsingJSONImpl implements ParsingJSON {
         double yearHigh = jobject.getAsJsonPrimitive("YearHigh").getAsDouble();
         String marketCapitalization = jobject.getAsJsonPrimitive("MarketCapitalization").getAsString();
         double oneYearTargetPrice = jobject.getAsJsonPrimitive("OneyrTargetPrice").getAsDouble();
-//        share = new Share (ticker, name, ask, bid, yearLow, yearHigh, marketCapitalization, oneYearTargetPrice);
+ //       share = new Share (ticker, name, ask, bid, yearLow, yearHigh, marketCapitalization, oneYearTargetPrice);
         return share;
     }
 }

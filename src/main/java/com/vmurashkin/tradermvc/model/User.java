@@ -1,6 +1,7 @@
 package com.vmurashkin.tradermvc.model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,12 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Share> shares = new ArrayList<Share>();
 
+    private BigDecimal money;
+
+        public void addShare(Share share) {
+        shares.add(share);
+    }
+
     public List<Share> getShares() {
         return shares;
     }
@@ -42,6 +49,15 @@ public class User {
         this.name = name;
     }
 
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+
     public User() {
+        this.money = new BigDecimal(100000);
     }
 }

@@ -1,13 +1,8 @@
 package com.vmurashkin.tradermvc.controller;
 
-
-
 import com.vmurashkin.tradermvc.model.Share;
 import com.vmurashkin.tradermvc.model.User;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import java.util.List;
 
 
@@ -16,28 +11,34 @@ import java.util.List;
  */
 public class Main {
 
-    public static void main(String[] args)  {
-//        GetShareData getShareData = new GetShareDataImpl();
-//        ParsingJSON parsingJSON = new ParsingJSONImpl();
+    public static void main(String[] args) {
+        GetShareData getShareData = new GetShareDataImpl();
+        ParsingJSON parsingJSON = new ParsingJSONImpl();
+
 //        String ticker = "AAPL";
 //        String answer = getShareData.getData(ticker);
 //        Share share = parsingJSON.parse(answer);
 //        System.out.println(share);
 
 
-        EntityManagerFactory emf = EntityManagerFactoryImpl.getInstance();
-        EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, 1);
+        ShareManipulator manipulator = new ShareManipulatorImpl();
+        User user = manipulator.getUser(1);
         List<Share> shares = user.getShares();
-        for (Share share : shares){
-            System.out.println(share.getTicker() + ", " + share.getQuantity());
+        for (Share share : shares) {
+            share.getAllData();
+            System.out.println(share);
+            System.out.println("Current Bid: " + share.getCurrentBid());
+            System.out.println("Current Ask: " + share.getCurrentAsk());
         }
 
-        // just fot test
+        String ticker = "AAPL";
+        int quantity = 500;
+        manipulator.buyShares(user, ticker, quantity);
+//        ticker = "NEW";
+//        quantity = 300;
+//        manipulator.buyShares(user, ticker, quantity);
+        manipulator.closeAll();
 
 
-//        Query query = em.createQuery("SELECT share_id, quantity FROM trader.portfolio where user_id = 1")
-em.close();
-        emf.close();
     }
 }
