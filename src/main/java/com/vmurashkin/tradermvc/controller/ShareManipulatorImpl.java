@@ -2,6 +2,7 @@ package com.vmurashkin.tradermvc.controller;
 
 import com.vmurashkin.tradermvc.model.Share;
 import com.vmurashkin.tradermvc.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.List;

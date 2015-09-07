@@ -1,5 +1,7 @@
 package com.vmurashkin.tradermvc.controller;
 
+import org.springframework.context.annotation.Bean;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 

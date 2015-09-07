@@ -2,6 +2,12 @@ package com.vmurashkin.tradermvc.controller;
 
 import com.vmurashkin.tradermvc.model.Share;
 import com.vmurashkin.tradermvc.model.User;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 
@@ -9,9 +15,13 @@ import java.util.List;
 /**
  * Created by OG_ML on 18.08.2015.
  */
+
+
 public class Main {
 
     public static void main(String[] args) {
+
+
         GetShareData getShareData = new GetShareDataImpl();
         ParsingJSON parsingJSON = new ParsingJSONImpl();
 
@@ -38,7 +48,6 @@ public class Main {
 //        quantity = 300;
 //        manipulator.buyShares(user, ticker, quantity);
         manipulator.closeAll();
-
 
     }
 }
