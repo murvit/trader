@@ -21,18 +21,11 @@ import javax.persistence.Persistence;
 @EnableWebMvc
 public class AppConfig {
 
-    private static EntityManagerFactory instance;
-
-    public static EntityManagerFactory getInstance() {
-        if (instance == null)
-            instance = Persistence.createEntityManagerFactory("trader");
-        return instance;
-    }
 
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-        resolver.setPrefix("/WEB-INF/pages/");
+        resolver.setPrefix("/WEB-INF/");
         resolver.setSuffix(".jsp");
         resolver.setViewClass(JstlView.class);
         resolver.setOrder(1);

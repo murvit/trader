@@ -1,7 +1,6 @@
 package com.vmurashkin.tradermvc.controller;
 
 import com.vmurashkin.tradermvc.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +21,7 @@ public class MainController {
 
     @RequestMapping("/")
     public ModelAndView listAdvs() {
-        return new ModelAndView("index", "shares", traderDAO.getShareList(user));
+        return new ModelAndView("hello", "shares", traderDAO.getShareList(user));
     }
 
 
