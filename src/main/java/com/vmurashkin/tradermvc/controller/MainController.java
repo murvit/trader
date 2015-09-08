@@ -16,17 +16,25 @@ import java.util.List;
 @Controller
 @RequestMapping("/")
 public class MainController {
-
-    private TraderDAO traderDAO = new TraderDAOImpl();
-    private User user = traderDAO.getUser(1);
+    @Autowired
+    private TraderDAO traderDAO;// = new TraderDAOImpl();
 
     @RequestMapping("/")
     public ModelAndView listShares() {
+        User user = traderDAO.getUser(1);
         List<Share> shares = traderDAO.getShareList(user);
         for (Share share : shares) {
             share.getAllData();
         }
-        return new ModelAndView("hello", "shares", shares);
+        ModelAndView modelAndView = new ModelAndView("hello");
+        modelAndView.addObject("shares", shares);
+        modelAndView.addObject("user", user);
+        return modelAndView;
+    }
+
+    @RequestMapping("/buy")
+    public ModelAndView buyShares(){
+return null;
     }
 
 }

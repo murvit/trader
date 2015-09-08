@@ -2,6 +2,8 @@ package com.vmurashkin.tradermvc.controller;
 
 import com.vmurashkin.tradermvc.model.Share;
 import com.vmurashkin.tradermvc.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
@@ -13,8 +15,9 @@ import java.util.List;
 
 public class TraderDAOImpl implements TraderDAO {
 
-    EntityManagerFactory emf = EntityManagerFactoryImpl.getInstance();
-    EntityManager em = emf.createEntityManager();
+ //   EntityManagerFactory emf = EntityManagerFactoryImpl.getInstance();
+    @Autowired
+    EntityManager em;// = emf.createEntityManager();
 
     @Override
     public User getUser(int id) {
@@ -60,9 +63,10 @@ public class TraderDAOImpl implements TraderDAO {
     @Override
     public void closeAll() {
         em.close();
-        emf.close();
+     //   emf.close();
     }
 
     public TraderDAOImpl() {
     }
+
 }

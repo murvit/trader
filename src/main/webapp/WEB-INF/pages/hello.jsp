@@ -40,5 +40,6 @@
         </tr>
     </c:forEach>
 </table>
+${user.getMoney()}
 </body>
 </html>

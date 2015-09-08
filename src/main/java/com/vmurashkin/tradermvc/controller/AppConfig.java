@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -19,6 +20,8 @@ import javax.persistence.Persistence;
 @EnableWebMvc
 public class AppConfig {
 
+    private static EntityManagerFactory EMFinstance;
+
     @Bean
     public UrlBasedViewResolver setupViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
@@ -29,8 +32,17 @@ public class AppConfig {
         return resolver;
     }
 
-    public TraderDAO advDAO() {
+    @Bean
+    public TraderDAO traderDAO() {
         return new TraderDAOImpl();
     }
+
+    @Bean
+    public static EntityManager getEMFinstance() {
+        if (EMFinstance == null)
+            EMFinstance = Persistence.createEntityManagerFactory("trader");
+        return EMFinstance.createEntityManager();
+    }
+
 
 }
