@@ -30,7 +30,7 @@ public class User {
 
     private BigDecimal money;
 
-        public void addShare(Share share) {
+    public void addShare(Share share) {
         shares.add(share);
     }
 
