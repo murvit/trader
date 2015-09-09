@@ -32,9 +32,14 @@ public class MainController {
         return modelAndView;
     }
 
+    @RequestMapping("/login")
+    public ModelAndView login(){
+        return new ModelAndView("login");
+    }
+
     @RequestMapping("/buy")
-    public ModelAndView buyShares(){
-return null;
+    public ModelAndView buyShares() {
+        return null;
     }
 
 }
