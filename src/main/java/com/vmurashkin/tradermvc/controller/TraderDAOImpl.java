@@ -1,10 +1,8 @@
 package com.vmurashkin.tradermvc.controller;
 
-import com.vmurashkin.tradermvc.model.Share;
-import com.vmurashkin.tradermvc.model.User;
+import com.vmurashkin.tradermvc.entities.Share;
+import com.vmurashkin.tradermvc.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,8 +19,8 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public User getUser(int id) {
-        User user = em.find(User.class, 1);
-        List<Share> shares = user.getShares();
+        User user = em.find(User.class, id);
+//        List<Share> shares = user.getShares();
         return user;
     }
 

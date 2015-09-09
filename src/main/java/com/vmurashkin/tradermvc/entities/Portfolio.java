@@ -1,8 +1,4 @@
-package com.vmurashkin.tradermvc.model;
-
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Map;
+package com.vmurashkin.tradermvc.entities;
 
 /**
  * Created by OG_ML on 18.08.2015.

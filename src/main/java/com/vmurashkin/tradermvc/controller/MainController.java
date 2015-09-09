@@ -1,7 +1,7 @@
 package com.vmurashkin.tradermvc.controller;
 
-import com.vmurashkin.tradermvc.model.Share;
-import com.vmurashkin.tradermvc.model.User;
+import com.vmurashkin.tradermvc.entities.Share;
+import com.vmurashkin.tradermvc.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +39,10 @@ public class MainController {
 
     @RequestMapping("/buy")
     public ModelAndView buyShares() {
-        return null;
+        User user = traderDAO.getUser(1);
+        ModelAndView modelAndView = new ModelAndView("buy");
+        modelAndView.addObject("user", user);
+        return modelAndView;
     }
 
 }

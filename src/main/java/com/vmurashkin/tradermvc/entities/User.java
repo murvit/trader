@@ -1,4 +1,4 @@
-package com.vmurashkin.tradermvc.model;
+package com.vmurashkin.tradermvc.entities;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

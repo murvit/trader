@@ -1,3 +1,15 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<html>
+<head>
+    <title>Trader</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
 <c:url value="/login" var="loginUrl"/>
 <form action="${loginUrl}" method="post">
     <c:if test="${param.error != null}">
@@ -23,3 +35,6 @@
            value="${_csrf.token}"/>
     <button type="submit" class="btn">Log in</button>
 </form>
+
+</body>
+</html>

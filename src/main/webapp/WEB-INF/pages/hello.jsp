@@ -14,6 +14,7 @@
     <tr>
 
         <td><b>Ticker</b></td>
+        <td><b>Name</b></td>
         <td><b>Quantity</b></td>
         <td><b>Bid</b></td>
         <td><b>Ask</b></td>
@@ -29,6 +30,7 @@
         <tr>
 
             <td>${share.ticker}</td>
+            <td>${share.name}</td>
             <td>${share.quantity}</td>
             <td>${share.bid}</td>
             <td>${share.ask}</td>
@@ -40,6 +42,8 @@
         </tr>
     </c:forEach>
 </table>
-${user.getMoney()}
+
+
+
 </body>
 </html>

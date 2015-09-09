@@ -1,7 +1,7 @@
 package com.vmurashkin.tradermvc.controller;
 
-import com.vmurashkin.tradermvc.model.Share;
-import com.vmurashkin.tradermvc.model.User;
+import com.vmurashkin.tradermvc.entities.Share;
+import com.vmurashkin.tradermvc.entities.User;
 
 import java.util.List;
 
