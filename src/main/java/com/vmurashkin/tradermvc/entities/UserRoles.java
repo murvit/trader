@@ -8,7 +8,7 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class Authorities {
+public class UserRoles {
 
     @Id
     String username;
