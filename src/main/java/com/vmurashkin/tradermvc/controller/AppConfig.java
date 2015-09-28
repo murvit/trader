@@ -34,7 +34,7 @@ public class AppConfig {
         return resolver;
     }
 
-    @Bean(name = "dataSource")
+    @Bean//(name = "dataSource")
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");

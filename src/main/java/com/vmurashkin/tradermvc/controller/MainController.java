@@ -37,6 +37,11 @@ public class MainController {
         return new ModelAndView("login");
     }
 
+    @RequestMapping("/sign")
+    public ModelAndView sign(){
+        return new ModelAndView("sign");
+    }
+
     @RequestMapping("/buy")
     public ModelAndView buyShares() {
         User user = traderDAO.getUser(1);

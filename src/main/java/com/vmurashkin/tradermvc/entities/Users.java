@@ -4,15 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
- * Created by OG_ML on 09.09.2015.
+ * Created by OG_ML on 28.09.2015.
  */
 
-@Entity (name = "user_roles")
-public class UserRoles {
-
+@Entity
+public class Users {
     @Id
     String username;
 
-    String authority;
+    String password;
+
 
 }

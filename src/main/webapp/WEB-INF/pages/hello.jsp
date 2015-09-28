@@ -9,6 +9,12 @@
 </head>
 <body>
 
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
+    <li role="presentation"><a href="/buy">Buy</a></li>
+    <li role="presentation"><a href="/sell">Sell</a></li>
+</ul>
+
 <table class="table table-striped">
     <thead>
     <tr>
