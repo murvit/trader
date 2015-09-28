@@ -36,7 +36,7 @@
     <button type="submit" class="btn btn-primary btn-lg">Log in</button>
 </form>
 
-
+<p>Or</p>
 
 <p><a class="btn btn-primary btn-lg" href="/sign" role="button">Sign in</a></p>
 
