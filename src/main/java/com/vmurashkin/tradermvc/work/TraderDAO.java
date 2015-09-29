@@ -10,8 +10,9 @@ import java.util.List;
  */
 public interface TraderDAO {
     User getUser(int id);
-    User getUserByName(String name);
-    List<Share> getShareList (User user);
+    User getCurrentUser();
+    List<Share> getShareListByUser(User user);
+    List<Share> getShareListByTickers (List<String>tickers);
     void buyShares (User user, String ticker, int quantity);
     void sellShares (User user, String ticker, int quantity);
     void closeAll();

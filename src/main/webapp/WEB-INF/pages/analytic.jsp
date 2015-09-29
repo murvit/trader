@@ -9,10 +9,11 @@
 </head>
 <body>
 
-<ul class="nav nav-pills">
-  <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
-  <li role="presentation"><a href="/buy">Buy</a></li>
-  <li role="presentation"><a href="/sell">Sell</a></li>
+<li role="presentation"><a href="/hello">Portfolio</a></li>
+<li role="presentation"><a href="/buy">Buy</a></li>
+<li role="presentation"><a href="/sign">Sell</a></li>
+<li role="presentation" class="active"><a href="/analytic">Analytic</a></li>
+<li role="presentation"><a href="/logout">Logout</a></li>
 </ul>
 
 <table class="table table-striped">
@@ -21,7 +22,6 @@
 
     <td><b>Ticker</b></td>
     <td><b>Name</b></td>
-    <td><b>Quantity</b></td>
     <td><b>Bid</b></td>
     <td><b>Ask</b></td>
     <td><b>One year target price</b></td>
@@ -37,7 +37,6 @@
 
       <td>${share.ticker}</td>
       <td>${share.name}</td>
-      <td>${share.quantity}</td>
       <td>${share.bid}</td>
       <td>${share.ask}</td>
       <td>${share.oneYearTargetPrice}</td>

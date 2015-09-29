@@ -12,7 +12,9 @@
 <ul class="nav nav-pills">
     <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
     <li role="presentation"><a href="/buy">Buy</a></li>
-    <li role="presentation"><a href="/sell">Sell</a></li>
+    <li role="presentation"><a href="/sign">Sell</a></li>
+    <li role="presentation"><a href="/analytic">Analytic</a></li>
+    <li role="presentation"><a href="/logout">Logout</a></li>
 </ul>
 
 <table class="table table-striped">

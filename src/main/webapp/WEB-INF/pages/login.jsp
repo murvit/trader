@@ -11,34 +11,67 @@
 <body>
 
 <c:url value="/login" var="loginUrl"/>
-<form action="${loginUrl}" method="post">
-    <c:if test="${param.error != null}">
-        <p>
-            Invalid username and password.
-        </p>
-    </c:if>
-    <c:if test="${param.logout != null}">
-        <p>
-            You have been logged out.
-        </p>
-    </c:if>
-    <p>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username"/>
-    </p>
-    <p>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password"/>
-    </p>
-    <input type="hidden"
-           name="${_csrf.parameterName}"
-           value="${_csrf.token}"/>
-    <button type="submit" class="btn btn-primary btn-lg">Log in</button>
-</form>
 
-<p>Or</p>
 
-<p><a class="btn btn-primary btn-lg" href="/sign" role="button">Sign in</a></p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Welcome</h3>
+    </div>
+
+    <div class="panel-body">
+
+        <form action="${loginUrl}" method="post">
+
+            <c:if test="${param.error != null}">
+                <div class="alert alert-danger" role="alert">Invalid username and password</div>
+            </c:if>
+            <!--
+            <c:if test="${param.logout != null}">
+                <div class="alert alert-success" role="alert">You have been logged out</div>
+            </c:if>
+-->
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"
+                                                                        aria-hidden="true"></span></span>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                       aria-describedby="basic-addon1">
+            </div>
+
+
+            <!--           <p>
+                           <label for="username">Username</label>
+                           <input type="text" id="username" name="username"/>
+                       </p>
+                -->
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-lock"
+                                                                        aria-hidden="true"></span></span>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                       aria-describedby="basic-addon2">
+            </div>
+
+            <!--           <p>
+                           <label for="password">Password</label>
+                           <input type="password" id="password" name="password"/>
+                       </p>
+                -->
+
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+
+            <ul class="pager">
+                <button type="submit" class="btn btn-primary btn-lg">Log in</button>
+                Or
+                <a class="btn btn-default btn-lg" href="/sign" role="button">Sign in</a>
+            </ul>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

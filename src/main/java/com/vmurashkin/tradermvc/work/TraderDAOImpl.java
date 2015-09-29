@@ -3,8 +3,11 @@ package com.vmurashkin.tradermvc.work;
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,10 +27,17 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
-    public User getUserByName(String name) {
+    public User getCurrentUser() {
+        User user = null;
+        String name;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            name = ((UserDetails)principal).getUsername();
+        } else {
+            name = principal.toString();
+        }
         Query query = em.createQuery("SELECT u FROM User u WHERE u.name=:name", User.class);
         query.setParameter("name", name);
-        User user = null;
         try {
             user = (User) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException e) {
@@ -37,7 +47,20 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
-    public List<Share> getShareList(User user) {
+    public List<Share> getShareListByTickers(List<String> tickers) {
+        List<Share> shares = new ArrayList<>();
+        for (String ticker : tickers){
+            Share share = new Share();
+            share.setTicker(ticker);
+            share.getAllData();
+            shares.add(share);
+        }
+            return shares;
+
+    }
+
+    @Override
+    public List<Share> getShareListByUser(User user) {
         return user.getShares();
     }
 
