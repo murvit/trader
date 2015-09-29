@@ -22,13 +22,8 @@
         <td><b>Ticker</b></td>
         <td><b>Name</b></td>
         <td><b>Quantity</b></td>
-        <td><b>Bid</b></td>
-        <td><b>Ask</b></td>
-        <td><b>One year target price</b></td>
-        <td><b>Year low</b></td>
-        <td><b>Year High</b></td>
-        <td><b>Market capitalization</b></td>
-
+        <td><b>Price</b></td>
+        <td><b>Sum</b></td>
 
     </tr>
     </thead>
@@ -39,16 +34,27 @@
             <td>${share.name}</td>
             <td>${share.quantity}</td>
             <td>${share.bid}</td>
-            <td>${share.ask}</td>
-            <td>${share.oneYearTargetPrice}</td>
-            <td>${share.yearLow}</td>
-            <td>${share.yearHigh}</td>
-            <td>${share.marketCapitalization}</td>
+            <td>${share.bid*share.quantity}</td>
 
         </tr>
     </c:forEach>
-</table>
+    <tr>
+        <td>Money</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>${user.money}</td>
+    </tr>
 
+    <tr>
+        <td><b>TOTAL</b></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>${user.sum}</b></td>
+    </tr>
+
+</table>
 
 
 </body>

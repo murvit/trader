@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -34,9 +35,13 @@ public class MainController {
 
         User user = traderDAO.getUserByName(username);
         List<Share> shares = traderDAO.getShareList(user);
+        BigDecimal sum = BigDecimal.ZERO;
         for (Share share : shares) {
             share.getAllData();
+            sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
         }
+        sum=sum.add(user.getMoney());
+        user.setSum(sum);
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("shares", shares);
         modelAndView.addObject("user", user);
@@ -52,6 +57,8 @@ public class MainController {
     public ModelAndView sign(){
         return new ModelAndView("sign");
     }
+
+
 
     @RequestMapping("/buy")
     public ModelAndView buyShares() {

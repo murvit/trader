@@ -30,6 +30,9 @@ public class User {
 
     private BigDecimal money;
 
+    @Transient
+    private BigDecimal sum;
+
     public void addShare(Share share) {
         shares.add(share);
     }
@@ -56,6 +59,14 @@ public class User {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    public BigDecimal getSum() {
+        return sum;
+    }
+
+    public void setSum(BigDecimal sum) {
+        this.sum = sum;
     }
 
     public User() {

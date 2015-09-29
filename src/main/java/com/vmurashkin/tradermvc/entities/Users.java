@@ -11,7 +11,6 @@ import javax.persistence.Id;
 public class Users {
     @Id
     String username;
-
     String password;
 
 

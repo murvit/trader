@@ -12,7 +12,6 @@ public class UserRoles {
 
     @Id
     String username;
-
     String role;
 
 }
