@@ -13,6 +13,6 @@ public class UserRoles {
     @Id
     String username;
 
-    String authority;
+    String role;
 
 }

@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 /**
  * Created by OG_ML on 17.08.2015.
  */
+
 @Entity
 public class Share {
 

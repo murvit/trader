@@ -1,4 +1,4 @@
-package com.vmurashkin.tradermvc.controller;
+package com.vmurashkin.tradermvc.work;
 
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
@@ -20,7 +20,19 @@ public class TraderDAOImpl implements TraderDAO {
     @Override
     public User getUser(int id) {
         User user = em.find(User.class, id);
-//        List<Share> shares = user.getShares();
+        return user;
+    }
+
+    @Override
+    public User getUserByName(String name) {
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.name=:name", User.class);
+        query.setParameter("name", name);
+        User user = null;
+        try {
+            user = (User) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 

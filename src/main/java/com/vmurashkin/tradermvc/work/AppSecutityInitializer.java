@@ -1,4 +1,4 @@
-package com.vmurashkin.tradermvc.controller;
+package com.vmurashkin.tradermvc.work;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
