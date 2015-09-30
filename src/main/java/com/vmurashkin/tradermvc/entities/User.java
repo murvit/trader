@@ -19,7 +19,10 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Share> shares = new ArrayList<Share>();
+    private List<Share> shares = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<SharesList> tickers = new ArrayList<>();
 
     private BigDecimal money;
 

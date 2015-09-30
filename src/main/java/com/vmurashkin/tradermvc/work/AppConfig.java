@@ -49,7 +49,7 @@ public class AppConfig {
     }
 
     @Bean
-    public static EntityManager getEMFinstance() {
+    public static EntityManager getEMinstance() {
         if (EMFinstance == null)
             EMFinstance = Persistence.createEntityManagerFactory("trader");
         return EMFinstance.createEntityManager();

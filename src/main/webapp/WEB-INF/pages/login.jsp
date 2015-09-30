@@ -23,13 +23,13 @@
         <form action="${loginUrl}" method="post">
 
             <c:if test="${param.error != null}">
-                <div class="alert alert-danger" role="alert">Invalid username and password</div>
+                <div class="alert alert-danger" role="alert">Invalid username or password</div>
             </c:if>
-            <!--
+
             <c:if test="${param.logout != null}">
                 <div class="alert alert-success" role="alert">You have been logged out</div>
             </c:if>
--->
+
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"
                                                                         aria-hidden="true"></span></span>

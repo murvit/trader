@@ -18,10 +18,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
-
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(
                         "select name,password, enabled from user where name=?")
@@ -29,10 +27,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                         "select name, role from user where name=?");
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
 //                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/sign").permitAll()
@@ -41,7 +37,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/login").failureUrl("/login?error").permitAll()
                 .usernameParameter("username").passwordParameter("password")
                 .and()
-                .logout().logoutSuccessUrl("/login?logout")
+                .logout().logoutSuccessUrl("/login?logout").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/403")
                 .and()

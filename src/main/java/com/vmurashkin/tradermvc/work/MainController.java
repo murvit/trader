@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +56,7 @@ public class MainController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login";
+        return "redirect:/login?logout";
     }
 
     @RequestMapping("/sign")
@@ -73,10 +74,22 @@ public class MainController {
     }
 
     @RequestMapping("/buy")
-    public ModelAndView buyShares() {
+    public ModelAndView buyShares(@RequestParam(value="id") int id) {
         User user = traderDAO.getCurrentUser();
+        Share share = traderDAO.getShareById(id);
         ModelAndView modelAndView = new ModelAndView("buy");
         modelAndView.addObject("user", user);
+        modelAndView.addObject("share", share);
+        return modelAndView;
+    }
+
+    @RequestMapping("/sell")
+    public ModelAndView sellShares(@RequestParam(value="id") int id) {
+        User user = traderDAO.getCurrentUser();
+        Share share = traderDAO.getShareById(id);
+        ModelAndView modelAndView = new ModelAndView("sell");
+        modelAndView.addObject("user", user);
+        modelAndView.addObject("share", share);
         return modelAndView;
     }
 

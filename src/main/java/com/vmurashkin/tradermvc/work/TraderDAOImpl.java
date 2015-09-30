@@ -21,9 +21,15 @@ public class TraderDAOImpl implements TraderDAO {
     EntityManager em;// = emf.createEntityManager();
 
     @Override
-    public User getUser(int id) {
+    public User getUserById(int id) {
         User user = em.find(User.class, id);
         return user;
+    }
+
+    @Override
+    public Share getShareById(int id) {
+        Share share = em.find(Share.class, id);
+        return share;
     }
 
     @Override

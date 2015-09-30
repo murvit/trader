@@ -11,9 +11,7 @@
 
 <ul class="nav nav-pills">
     <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
-    <li role="presentation"><a href="/buy">Buy</a></li>
-    <li role="presentation"><a href="/sign">Sell</a></li>
-    <li role="presentation"><a href="/analytic">Analytic</a></li>
+    <li role="presentation"><a href="/analytic">Watchlist</a></li>
     <li role="presentation"><a href="/logout">Logout</a></li>
 </ul>
 
@@ -26,6 +24,8 @@
         <td><b>Quantity</b></td>
         <td><b>Price</b></td>
         <td><b>Sum</b></td>
+        <td align = "center" colspan = "2"><b>Action</b></td>
+
 
     </tr>
     </thead>
@@ -37,6 +37,8 @@
             <td>${share.quantity}</td>
             <td>${share.bid}</td>
             <td>${share.bid*share.quantity}</td>
+            <td align = "center"><a href = "/buy?id=${share.id}">Buy</a></td>
+            <td align = "center"><a href = "/sell?id=${share.id}">Sell</a></td>
 
         </tr>
     </c:forEach>
@@ -46,6 +48,8 @@
         <td></td>
         <td></td>
         <td>${user.money}</td>
+        <td></td>
+        <td></td>
     </tr>
 
     <tr>
@@ -54,6 +58,8 @@
         <td></td>
         <td></td>
         <td><b>${user.sum}</b></td>
+        <td></td>
+        <td></td>
     </tr>
 
 </table>

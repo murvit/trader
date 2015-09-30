@@ -94,6 +94,10 @@ public class Share {
     public Share() {
     }
 
+    public int getId() {
+        return id;
+    }
+
     public User getUser() {
         return user;
     }
