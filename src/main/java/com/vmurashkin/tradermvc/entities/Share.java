@@ -191,6 +191,10 @@ public class Share {
         this.oneYearTargetPrice = oneYearTargetPrice;
     }
 
+    public Share(String ticker) {
+        this.ticker = ticker;
+    }
+
     @Override
     public String toString() {
         return "Share{" +

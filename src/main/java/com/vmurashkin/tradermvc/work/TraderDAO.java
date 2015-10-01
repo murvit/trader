@@ -13,6 +13,7 @@ public interface TraderDAO {
     User getCurrentUser();
     Share getShareById(int id);
     List<Share> getShareListByUser(User user);
+    List<Share> getWatchShareListByUser (User user);
     List<Share> getShareListByTickers (List<String>tickers);
     void buyShares (User user, String ticker, int quantity);
     void sellShares (User user, String ticker, int quantity);

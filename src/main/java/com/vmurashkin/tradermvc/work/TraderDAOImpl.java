@@ -71,6 +71,11 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    public List<Share> getWatchShareListByUser(User user) {
+        return user.getWatchShares();
+    }
+
+    @Override
     public void buyShares(User user, String ticker, int quantity) {
         Query query = em.createQuery("SELECT s FROM Share s WHERE s.user=:user AND s.ticker = :ticker", Share.class);
         query.setParameter("user", user);

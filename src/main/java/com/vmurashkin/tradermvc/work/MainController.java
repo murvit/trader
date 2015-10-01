@@ -1,7 +1,6 @@
 package com.vmurashkin.tradermvc.work;
 
 import com.vmurashkin.tradermvc.entities.Share;
-import com.vmurashkin.tradermvc.entities.SharesList;
 import com.vmurashkin.tradermvc.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -66,8 +65,12 @@ public class MainController {
 
     @RequestMapping("/analytic")
     public ModelAndView analytic(){
-        List<String> tickers = new SharesList().tickers;
-        List<Share>shares = traderDAO.getShareListByTickers(tickers);
+
+        User user = traderDAO.getCurrentUser();
+        List<Share> shares = traderDAO.getWatchShareListByUser(user);
+        for (Share share : shares) {
+            share.getAllData();
+        }
         ModelAndView modelAndView = new ModelAndView("analytic");
         modelAndView.addObject("shares", shares);
         return modelAndView;
