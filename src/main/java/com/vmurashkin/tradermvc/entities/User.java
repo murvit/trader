@@ -1,6 +1,5 @@
 package com.vmurashkin.tradermvc.entities;
 
-import org.hibernate.annotations.IndexColumn;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -28,7 +27,7 @@ public class User {
 
     private String role;
 
-    private int enabled;
+    private boolean enabled;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Share> shares = new ArrayList<>();
@@ -45,13 +44,13 @@ public class User {
         return name;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public String getRole() {
+//        return role;
+//    }
+//
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 
     public String getPassword() {
         return password;
@@ -93,10 +92,25 @@ public class User {
         this.sum = sum;
     }
 
-    public User() {
+    public void countSum() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Share share : shares) {
+            share.getAllData();
+            sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
+        }
+        this.sum=sum.add(this.getMoney());
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
         this.money = new BigDecimal(100000);
         this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
                 "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
+        this.enabled = true;
+        this.role = "ROLE_USER";
+    }
 
+    public User() {
     }
 }

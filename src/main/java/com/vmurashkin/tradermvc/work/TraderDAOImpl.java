@@ -48,17 +48,13 @@ public class TraderDAOImpl implements TraderDAO {
         return user;
     }
 
-//    @Override
-//    public List<Share> getShareListByTickers(List<String> tickers) {
-//        List<Share> shares = new ArrayList<>();
-//        for (String ticker : tickers){
-//            Share share = new Share();
-//            share.setTicker(ticker);
-//            share.getAllData();
-//            shares.add(share);
-//        }
-//            return shares;
-//    }
+
+    @Override
+    public void addUser(User user) {
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
+    }
 
     @Override
     public List<Share> getShareListByUser(User user) {

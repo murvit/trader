@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -31,13 +30,7 @@ public class MainController {
 
         User user = traderDAO.getCurrentUser();
         List<Share> shares = traderDAO.getShareListByUser(user);
-        BigDecimal sum = BigDecimal.ZERO;
-        for (Share share : shares) {
-            share.getAllData();
-            sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
-        }
-        sum=sum.add(user.getMoney());
-        user.setSum(sum);
+        user.countSum();
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("shares", shares);
         modelAndView.addObject("user", user);
@@ -45,26 +38,41 @@ public class MainController {
     }
 
     @RequestMapping("/login")
-    public ModelAndView login(){
+    public ModelAndView login() {
         return new ModelAndView("login");
     }
 
     @RequestMapping("/logout")
-    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
+        if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
         return "redirect:/login?logout";
     }
 
     @RequestMapping("/sign")
-    public ModelAndView sign(){
+    public ModelAndView sign() {
+//        User user = new User();
+        ModelAndView modelAndView = new ModelAndView("sign");
+//        modelAndView.addObject(user);
         return new ModelAndView("sign");
     }
 
+    @RequestMapping("/adduser")
+    public String addUser(@RequestParam(value = "name") String name,
+                          @RequestParam(value = "password") String password,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+
+        User user = new User(name, password);
+        traderDAO.addUser(user);
+        return "redirect:/login";
+
+    }
+
     @RequestMapping("/analytic")
-    public ModelAndView analytic(){
+    public ModelAndView analytic() {
 
         User user = traderDAO.getCurrentUser();
         List<Share> shares = traderDAO.getWatchShareListByUser(user);
@@ -77,7 +85,7 @@ public class MainController {
     }
 
     @RequestMapping("/buy")
-    public ModelAndView buyShares(@RequestParam(value="id") int id) {
+    public ModelAndView buyShares(@RequestParam(value = "id") int id) {
         User user = traderDAO.getCurrentUser();
         Share share = traderDAO.getShareById(id);
         ModelAndView modelAndView = new ModelAndView("buy");
@@ -87,7 +95,7 @@ public class MainController {
     }
 
     @RequestMapping("/sell")
-    public ModelAndView sellShares(@RequestParam(value="id") int id) {
+    public ModelAndView sellShares(@RequestParam(value = "id") int id) {
         User user = traderDAO.getCurrentUser();
         Share share = traderDAO.getShareById(id);
         ModelAndView modelAndView = new ModelAndView("sell");
