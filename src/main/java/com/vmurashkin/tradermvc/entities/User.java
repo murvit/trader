@@ -1,6 +1,10 @@
 package com.vmurashkin.tradermvc.entities;
 
+import org.hibernate.annotations.IndexColumn;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,38 +16,33 @@ import java.util.List;
 
 @Entity
 public class User {
+
     @Id
-    @GeneratedValue
-    private int id;
+    @NotNull
+    @NotEmpty
     private String name;
-    private String role;
+
+    @NotNull
+    @NotEmpty
     private String password;
+
+    private String role;
+
+    private int enabled;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Share> shares = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Share> watchShares = new ArrayList<>();
+    @ElementCollection
+    private List<String> tickers = new ArrayList<>();
 
     private BigDecimal money;
 
     @Transient
     private BigDecimal sum;
 
-    public void addShare(Share share) {
-        shares.add(share);
-    }
-
-    public List<Share> getShares() {
-        return shares;
-    }
-
-    public void setShares(List<Share> shares) {
-        this.shares = shares;
-    }
-
-    public List<Share> getWatchShares() {
-        return watchShares;
+    public String getName() {
+        return name;
     }
 
     public String getRole() {
@@ -62,16 +61,20 @@ public class User {
         this.password = password;
     }
 
-    public void setWatchShares(List<Share> watchShares) {
-        this.watchShares = watchShares;
+    public List<Share> getShares() {
+        return shares;
     }
 
-    public String getName() {
-        return name;
+    public void setShares(List<Share> shares) {
+        this.shares = shares;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<String> getTickers() {
+        return tickers;
+    }
+
+    public void setTickers(List<String> tickers) {
+        this.tickers = tickers;
     }
 
     public BigDecimal getMoney() {
@@ -92,10 +95,8 @@ public class User {
 
     public User() {
         this.money = new BigDecimal(100000);
-        List<String> tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
+        this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
                 "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
-        for (String ticker : tickers){
-            this.watchShares.add(new Share(ticker));
-        }
+
     }
 }

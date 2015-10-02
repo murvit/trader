@@ -19,6 +19,7 @@ import java.math.BigDecimal;
  */
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Share {
 
     @Id
@@ -28,7 +29,7 @@ public class Share {
     private int quantity;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_name")
     private User user;
 
     @Transient

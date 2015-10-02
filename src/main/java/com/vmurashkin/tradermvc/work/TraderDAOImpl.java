@@ -16,15 +16,8 @@ import java.util.List;
 
 public class TraderDAOImpl implements TraderDAO {
 
- //   EntityManagerFactory emf = EntityManagerFactoryImpl.getInstance();
     @Autowired
-    EntityManager em;// = emf.createEntityManager();
-
-    @Override
-    public User getUserById(int id) {
-        User user = em.find(User.class, id);
-        return user;
-    }
+    EntityManager em;
 
     @Override
     public Share getShareById(int id) {
@@ -34,7 +27,7 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public User getCurrentUser() {
-        User user = null;
+        User user;
         String name;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
@@ -42,28 +35,30 @@ public class TraderDAOImpl implements TraderDAO {
         } else {
             name = principal.toString();
         }
-        Query query = em.createQuery("SELECT u FROM User u WHERE u.name=:name", User.class);
-        query.setParameter("name", name);
-        try {
-            user = (User) query.getSingleResult();
-        } catch (NoResultException | NonUniqueResultException e) {
-            e.printStackTrace();
-        }
+//        Query query = em.createQuery("SELECT u FROM User u WHERE u.name=:name", User.class);
+//        query.setParameter("name", name);
+//        try {
+//            user = (User) query.getSingleResult();
+//        } catch (NoResultException | NonUniqueResultException e) {
+//            e.printStackTrace();
+//        }
+
+        user = em.find(User.class, name);
+
         return user;
     }
 
-    @Override
-    public List<Share> getShareListByTickers(List<String> tickers) {
-        List<Share> shares = new ArrayList<>();
-        for (String ticker : tickers){
-            Share share = new Share();
-            share.setTicker(ticker);
-            share.getAllData();
-            shares.add(share);
-        }
-            return shares;
-
-    }
+//    @Override
+//    public List<Share> getShareListByTickers(List<String> tickers) {
+//        List<Share> shares = new ArrayList<>();
+//        for (String ticker : tickers){
+//            Share share = new Share();
+//            share.setTicker(ticker);
+//            share.getAllData();
+//            shares.add(share);
+//        }
+//            return shares;
+//    }
 
     @Override
     public List<Share> getShareListByUser(User user) {
@@ -72,7 +67,12 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public List<Share> getWatchShareListByUser(User user) {
-        return user.getWatchShares();
+        List<Share> shares = new ArrayList<>();
+        for (String ticker : user.getTickers()){
+            Share share = new Share(ticker);
+            shares.add(share);
+        }
+        return shares;
     }
 
     @Override
