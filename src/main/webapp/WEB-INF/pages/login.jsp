@@ -20,7 +20,7 @@
 
     <div class="panel-body">
 
-        <form action="${loginUrl}" method="post">
+        <form role="form" class="form-horizontal" action="${loginUrl}" method="post">
 
             <c:if test="${param.error != null}">
                 <div class="alert alert-danger" role="alert">Invalid username or password</div>
@@ -34,32 +34,22 @@
                 <div class="alert alert-success" role="alert">You successfully signed in</div>
             </c:if>
 
-            <div class="input-group">
+            <div class="input-group" style="float:none; margin:0 auto">
+                <div class="input-group">
+
                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"
                                                                         aria-hidden="true"></span></span>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Username"
-                       aria-describedby="basic-addon1">
-            </div>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username"
+                           aria-describedby="basic-addon1">
+                </div>
 
-
-            <!--           <p>
-                           <label for="username">Username</label>
-                           <input type="text" id="username" name="username"/>
-                       </p>
-                -->
-
-            <div class="input-group">
+                <div class="input-group">
                 <span class="input-group-addon" id="basic-addon2"><span class="glyphicon glyphicon-lock"
                                                                         aria-hidden="true"></span></span>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password"
-                       aria-describedby="basic-addon2">
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password"
+                           aria-describedby="basic-addon2">
+                </div>
             </div>
-
-            <!--           <p>
-                           <label for="password">Password</label>
-                           <input type="password" id="password" name="password"/>
-                       </p>
-                -->
 
             <input type="hidden"
                    name="${_csrf.parameterName}"

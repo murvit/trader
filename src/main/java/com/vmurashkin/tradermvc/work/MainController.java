@@ -74,21 +74,24 @@ public class MainController {
 
         User user = traderDAO.getCurrentUser();
         List<Share> shares = traderDAO.getWatchShareListByUser(user);
+
         for (Share share : shares) {
             share.getAllData();
+            System.out.println(share.getTicker());
         }
+
         ModelAndView modelAndView = new ModelAndView("analytic");
         modelAndView.addObject("shares", shares);
         return modelAndView;
     }
 
     @RequestMapping("/buy")
-    public ModelAndView buyShares(@RequestParam(value = "id") int id) {
+    public ModelAndView buyShares(@RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
-        Share share = traderDAO.getShareById(id);
+//        Share share = traderDAO.getShareByTicker(user, ticker);
         ModelAndView modelAndView = new ModelAndView("buy");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("share", share);
+        modelAndView.addObject("ticker", ticker);
         return modelAndView;
     }
 
@@ -101,5 +104,4 @@ public class MainController {
         modelAndView.addObject("share", share);
         return modelAndView;
     }
-
 }

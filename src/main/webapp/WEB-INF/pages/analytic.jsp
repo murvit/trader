@@ -42,9 +42,8 @@
             <td>${share.yearLow}</td>
             <td>${share.yearHigh}</td>
             <td>${share.marketCapitalization}</td>
-            <td align = "center"><a href = "/buy?id=${share.id}">Buy</a></td>
-            <td align = "center"><a href = "/remove?id=${share.id}">Remove</a></td>
-
+            <td align = "center"><a href = "/buy?ticker=${share.ticker}">Buy</a></td>
+            <td align = "center"><a href = "/remove?ticker=${share.ticker}">Remove</a></td>
 
         </tr>
     </c:forEach>

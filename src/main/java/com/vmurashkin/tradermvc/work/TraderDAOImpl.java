@@ -29,6 +29,20 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    public Share getShareByTicker(User user, String ticker) {
+        Share share=null;
+        String name = user.getName();
+        Query query = em.createQuery("SELECT s FROM Share s WHERE s.ticker=:ticker AND s.user_name=:name ", Share.class);
+        query.setParameter("ticker", ticker);
+        try {
+            share = (Share) query.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException e) {
+            e.printStackTrace();
+        }
+        return share;
+    }
+
+    @Override
     public User getCurrentUser() {
         User user;
         String name;

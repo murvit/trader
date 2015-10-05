@@ -13,7 +13,7 @@
     <li role="presentation"><a href="/logout">Logout</a></li>
 </ul>
 
-User ${user.name} wants to buy share ${share.name}
+User ${user.name} wants to buy share ${ticker}
 
 
 </body>
