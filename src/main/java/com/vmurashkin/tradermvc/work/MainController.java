@@ -53,9 +53,6 @@ public class MainController {
 
     @RequestMapping("/sign")
     public ModelAndView sign() {
-//        User user = new User();
-        ModelAndView modelAndView = new ModelAndView("sign");
-//        modelAndView.addObject(user);
         return new ModelAndView("sign");
     }
 
@@ -64,11 +61,12 @@ public class MainController {
                           @RequestParam(value = "password") String password,
                           HttpServletRequest request,
                           HttpServletResponse response) {
-
-        User user = new User(name, password);
-        traderDAO.addUser(user);
-        return "redirect:/login";
-
+        if (!traderDAO.isUserExist(name)) {
+            User user = new User(name, password);
+            traderDAO.addUser(user);
+            return "redirect:/login?signed";
+        }
+        return "redirect:/sign?error";
     }
 
     @RequestMapping("/analytic")

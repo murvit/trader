@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -9,6 +8,11 @@
 </head>
 <body>
 <div class="container">
+
+    <c:if test="${param.error != null}">
+        <div class="alert alert-danger" role="alert">Error while signin in. May be user is already exist</div>
+    </c:if>
+
     <form role="form" class="form-horizontal" action="/adduser" method="post">
         <div class="form-group"><h3>New user</h3></div>
         <div class="form-group"><input type="text" class="form-control" name="name" placeholder="Name"></div>

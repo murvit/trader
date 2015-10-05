@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +34,7 @@ public class TraderDAOImpl implements TraderDAO {
         String name;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
-            name = ((UserDetails)principal).getUsername();
+            name = ((UserDetails) principal).getUsername();
         } else {
             name = principal.toString();
         }
@@ -57,6 +60,14 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    public boolean isUserExist(String name) {
+        if (name != null) {
+            User user = em.find(User.class, name);
+            return (user != null);
+        } else return true;
+    }
+
+    @Override
     public List<Share> getShareListByUser(User user) {
         return user.getShares();
     }
@@ -64,7 +75,7 @@ public class TraderDAOImpl implements TraderDAO {
     @Override
     public List<Share> getWatchShareListByUser(User user) {
         List<Share> shares = new ArrayList<>();
-        for (String ticker : user.getTickers()){
+        for (String ticker : user.getTickers()) {
             Share share = new Share(ticker);
             shares.add(share);
         }
@@ -103,7 +114,7 @@ public class TraderDAOImpl implements TraderDAO {
     @Override
     public void closeAll() {
         em.close();
-     //   emf.close();
+        //   emf.close();
     }
 
     public TraderDAOImpl() {

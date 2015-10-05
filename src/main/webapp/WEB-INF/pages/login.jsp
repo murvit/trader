@@ -30,6 +30,10 @@
                 <div class="alert alert-success" role="alert">You have been logged out</div>
             </c:if>
 
+            <c:if test="${param.signed != null}">
+                <div class="alert alert-success" role="alert">You successfully signed in</div>
+            </c:if>
+
             <div class="input-group">
                 <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"
                                                                         aria-hidden="true"></span></span>

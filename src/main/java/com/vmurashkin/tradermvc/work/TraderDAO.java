@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface TraderDAO {
     User getCurrentUser();
+    public boolean isUserExist(String name);
     Share getShareById(int id);
     List<Share> getShareListByUser(User user);
     List<Share> getWatchShareListByUser (User user);

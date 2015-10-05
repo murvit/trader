@@ -17,12 +17,8 @@ import java.util.List;
 public class User {
 
     @Id
-    @NotNull
-    @NotEmpty
     private String name;
 
-    @NotNull
-    @NotEmpty
     private String password;
 
     private String role;
