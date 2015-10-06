@@ -39,6 +39,7 @@ public class User {
     public void addShare (Share share){
 
         this.shares.add(share);
+
     }
 
     public String getName() {

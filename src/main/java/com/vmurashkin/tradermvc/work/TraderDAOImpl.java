@@ -23,7 +23,6 @@ public class TraderDAOImpl implements TraderDAO {
     @Autowired
     EntityManager em;
 
-
     @Override
     public Share getShareById(int id) {
         Share share = em.find(Share.class, id);
@@ -32,7 +31,7 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public Share getShareByTicker(User user, String ticker) {
-        Share share=null;
+        Share share = null;
         String name = user.getName();
         Query query = em.createQuery("SELECT s FROM Share s WHERE s.ticker=:ticker AND s.user_name=:name ", Share.class);
         query.setParameter("ticker", ticker);
@@ -54,16 +53,7 @@ public class TraderDAOImpl implements TraderDAO {
         } else {
             name = principal.toString();
         }
-//        Query query = em.createQuery("SELECT u FROM User u WHERE u.name=:name", User.class);
-//        query.setParameter("name", name);
-//        try {
-//            user = (User) query.getSingleResult();
-//        } catch (NoResultException | NonUniqueResultException e) {
-//            e.printStackTrace();
-//        }
-
         user = em.find(User.class, name);
-
         return user;
     }
 
@@ -77,7 +67,7 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public boolean isUserExist(String name) {
-        if (name != null) {
+        if (name != null && !"".equals(name)) {
             User user = em.find(User.class, name);
             return (user != null);
         } else return true;
@@ -99,30 +89,51 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
-    public void buyShares(User user, String ticker, int quantity) {
+    public boolean buyShares(User user, String ticker, int quantity) {
 
+        Share share = new Share(ticker);
+        share.setAsk(share.getCurrentAsk());
+        share.setQuantity(quantity);
+        BigDecimal newMoney = user.getMoney().subtract(share.getAsk().multiply(new BigDecimal(quantity)));
+        if (newMoney.compareTo(new BigDecimal(0)) <= 0 || quantity<=0) return false;
 
-        Query query = em.createQuery("SELECT s FROM Share s WHERE s.user=:user AND s.ticker = :ticker", Share.class);
-        query.setParameter("user", user);
-        query.setParameter("ticker", ticker);
-        Share share = null;
-        try {
-            share = (Share) query.getSingleResult();
-        } catch (NoResultException | NonUniqueResultException e) {
-            e.printStackTrace();
+        boolean isPresent = false;
+        for (Share current : user.getShares()) {
+            if (current.getTicker().equals(ticker)) {
+                user.setMoney(newMoney);
+                current.setQuantity(current.getQuantity()+quantity);
+                isPresent =  true;
+                break;
+            }
         }
-        if (share == null)
-            share = new Share();
+        if (!isPresent) {
+            user.setMoney(newMoney);
+            user.addShare(share);
+
+        }
+//        Query query = em.createQuery("SELECT s FROM Share s WHERE s.user=:user AND s.ticker = :ticker", Share.class);
+//        query.setParameter("user", user);
+//        query.setParameter("ticker", ticker);
+//
+//        try {
+//            share = (Share) query.getSingleResult();
+//        } catch (NoResultException | NonUniqueResultException e) {
+//            e.printStackTrace();
+//        }
+//        if (share == null)
+//            share = new Share();
         try {
             em.getTransaction().begin();
-            share.setTicker(ticker);
-            share.setQuantity(share.getQuantity() + quantity);
-            share.setUser(user);
-            user.addShare(share);
-            em.persist(share);
+//            share.setTicker(ticker);
+//            share.setQuantity(share.getQuantity() + quantity);
+//            share.setUser(user);
+//            user.addShare(share);
+            em.persist(user);
             em.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             em.getTransaction().rollback();
+            return false;
         }
     }
 

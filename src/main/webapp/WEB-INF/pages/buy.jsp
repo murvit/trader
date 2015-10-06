@@ -14,13 +14,13 @@
     <li role="presentation"><a href="/logout">Logout</a></li>
 </ul>
 
-User ${user.name} wants to buy share ${share.ticker}
+User ${user.name} wants to buy share ${ticker}
 You can buy up to shares
 How many shares you wants to buy?
 
 
-<c:if test="${param.zero != null}">
-    <div class="alert alert-danger" role="alert">Error in number</div>
+<c:if test="${error!= null}">
+    <div class="alert alert-danger" role="alert">Error! Something wrong!</div>
 </c:if>
 
 <form role="form" class="form-horizontal" action="/buyshare" method="post">
@@ -31,7 +31,7 @@ How many shares you wants to buy?
 
     <input type="hidden"
            name="ticker"
-           value="${share.ticker}"/>
+           value="${ticker}"/>
 
     <input type="hidden"
            name="${_csrf.parameterName}"

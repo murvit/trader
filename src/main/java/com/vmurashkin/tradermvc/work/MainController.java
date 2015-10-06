@@ -87,22 +87,29 @@ public class MainController {
     @RequestMapping("/buy")
     public ModelAndView buyShares(@RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
-        Share share = new Share(ticker);
         ModelAndView modelAndView = new ModelAndView("buy");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("share", share);
+        modelAndView.addObject("ticker", ticker);
         return modelAndView;
     }
 
     @RequestMapping("/buyshare")
-    public String buyShare(@RequestParam(value = "quantity") int quantity,
-                           @RequestParam(value = "ticker") String ticker,
-                          HttpServletRequest request,
-                          HttpServletResponse response) {
+    public ModelAndView buyShare(@RequestParam(value = "quantity") int quantity,
+                                 @RequestParam(value = "ticker") String ticker,
+                                 HttpServletRequest request,
+                                 HttpServletResponse response) {
         User user = traderDAO.getCurrentUser();
-        if (quantity<=0) return "redirect:buy?zero,ticker=ticker";
-        traderDAO.buyShares(user, ticker, quantity);
-        return "redirect:/hello";
+        boolean success = traderDAO.buyShares(user, ticker, quantity);
+        if (success) {
+            return listShares();
+
+        } else {
+            ModelAndView modelAndView = new ModelAndView("buy");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("ticker", ticker);
+            modelAndView.addObject("error", "error");
+            return modelAndView;
+        }
     }
 
     @RequestMapping("/sell")

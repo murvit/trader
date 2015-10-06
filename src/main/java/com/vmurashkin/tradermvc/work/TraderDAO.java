@@ -16,7 +16,7 @@ public interface TraderDAO {
     List<Share> getShareListByUser(User user);
     List<Share> getWatchShareListByUser (User user);
     void addUser(User user);
-    void buyShares (User user, String ticker, int quantity);
+    boolean buyShares (User user, String ticker, int quantity);
     void sellShares (User user, String ticker, int quantity);
     void closeAll();
 

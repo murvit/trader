@@ -25,7 +25,7 @@
                 <div class="input-group">
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>
-                    <input type="text" class="form-control" name="name" placeholder="Username">
+                    <input type="text" class="form-control" name="name" placeholder="Username" required pattern="^[a-zA-Z0-9]+$">
                 </div>
 
                 <div class="input-group">
