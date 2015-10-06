@@ -98,7 +98,7 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.money = new BigDecimal(100000);
+        this.money = new BigDecimal(100000.00);
 //        this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
 //                "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
 

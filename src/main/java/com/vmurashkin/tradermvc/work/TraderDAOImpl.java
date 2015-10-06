@@ -94,6 +94,8 @@ public class TraderDAOImpl implements TraderDAO {
         Share share = new Share(ticker);
         share.setAsk(share.getCurrentAsk());
         share.setQuantity(quantity);
+        share.setUser(user);
+
         BigDecimal newMoney = user.getMoney().subtract(share.getAsk().multiply(new BigDecimal(quantity)));
         if (newMoney.compareTo(new BigDecimal(0)) <= 0 || quantity<=0) return false;
 
