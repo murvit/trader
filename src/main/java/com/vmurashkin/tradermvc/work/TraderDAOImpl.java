@@ -25,8 +25,7 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public Share getShareById(int id) {
-        Share share = em.find(Share.class, id);
-        return share;
+        return em.find(Share.class, id);
     }
 
     @Override
@@ -97,39 +96,24 @@ public class TraderDAOImpl implements TraderDAO {
         share.setUser(user);
 
         BigDecimal newMoney = user.getMoney().subtract(share.getAsk().multiply(new BigDecimal(quantity)));
-        if (newMoney.compareTo(new BigDecimal(0)) <= 0 || quantity<=0) return false;
+        if (newMoney.compareTo(new BigDecimal(0)) <= 0 || quantity <= 0) return false;
 
         boolean isPresent = false;
         for (Share current : user.getShares()) {
             if (current.getTicker().equals(ticker)) {
                 user.setMoney(newMoney);
-                current.setQuantity(current.getQuantity()+quantity);
-                isPresent =  true;
+                current.setQuantity(current.getQuantity() + quantity);
+                isPresent = true;
                 break;
             }
         }
         if (!isPresent) {
             user.setMoney(newMoney);
             user.addShare(share);
-
         }
-//        Query query = em.createQuery("SELECT s FROM Share s WHERE s.user=:user AND s.ticker = :ticker", Share.class);
-//        query.setParameter("user", user);
-//        query.setParameter("ticker", ticker);
-//
-//        try {
-//            share = (Share) query.getSingleResult();
-//        } catch (NoResultException | NonUniqueResultException e) {
-//            e.printStackTrace();
-//        }
-//        if (share == null)
-//            share = new Share();
+
         try {
             em.getTransaction().begin();
-//            share.setTicker(ticker);
-//            share.setQuantity(share.getQuantity() + quantity);
-//            share.setUser(user);
-//            user.addShare(share);
             em.persist(user);
             em.getTransaction().commit();
             return true;
