@@ -27,7 +27,6 @@ public class MainController {
 
     @RequestMapping({"/", "/hello"})
     public ModelAndView listShares() {
-
         User user = traderDAO.getCurrentUser();
         List<Share> shares = traderDAO.getShareListByUser(user);
         user.countSum();
@@ -88,11 +87,22 @@ public class MainController {
     @RequestMapping("/buy")
     public ModelAndView buyShares(@RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
-//        Share share = traderDAO.getShareByTicker(user, ticker);
+        Share share = new Share(ticker);
         ModelAndView modelAndView = new ModelAndView("buy");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("ticker", ticker);
+        modelAndView.addObject("share", share);
         return modelAndView;
+    }
+
+    @RequestMapping("/buyshare")
+    public String buyShare(@RequestParam(value = "quantity") int quantity,
+                           @RequestParam(value = "ticker") String ticker,
+                          HttpServletRequest request,
+                          HttpServletResponse response) {
+        User user = traderDAO.getCurrentUser();
+        if (quantity<=0) return "redirect:buy?zero,ticker=ticker";
+        traderDAO.buyShares(user, ticker, quantity);
+        return "redirect:/hello";
     }
 
     @RequestMapping("/sell")

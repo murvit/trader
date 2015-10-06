@@ -22,7 +22,6 @@
 
             <div class="input-group" style="float:none; margin:0 auto">
 
-
                 <div class="input-group">
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-user" aria-hidden="true"></span></span>

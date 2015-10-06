@@ -37,8 +37,8 @@
             <td>${share.quantity}</td>
             <td>${share.bid}</td>
             <td>${share.bid*share.quantity}</td>
-            <td align = "center"><a href = "/buy?id=${share.id}">Buy</a></td>
-            <td align = "center"><a href = "/sell?id=${share.id}">Sell</a></td>
+            <td align = "center"><a href = "/buy?ticker=${share.ticker}">Buy</a></td>
+            <td align = "center"><a href = "/sell?ticker=${share.ticker}">Sell</a></td>
 
         </tr>
     </c:forEach>

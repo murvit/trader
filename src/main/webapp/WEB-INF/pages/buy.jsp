@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,8 +14,31 @@
     <li role="presentation"><a href="/logout">Logout</a></li>
 </ul>
 
-User ${user.name} wants to buy share ${ticker}
+User ${user.name} wants to buy share ${share.ticker}
+You can buy up to shares
+How many shares you wants to buy?
 
+
+<c:if test="${param.zero != null}">
+    <div class="alert alert-danger" role="alert">Error in number</div>
+</c:if>
+
+<form role="form" class="form-horizontal" action="/buyshare" method="post">
+    <div class="input-group">
+        <span class="input-group-addon"></span>
+        <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Quantity">
+    </div>
+
+    <input type="hidden"
+           name="ticker"
+           value="${share.ticker}"/>
+
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
+
+    <button type="submit" class="btn btn-primary btn-lg">Buy</button>
+</form>
 
 </body>
 </html>

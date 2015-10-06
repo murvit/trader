@@ -36,6 +36,11 @@ public class User {
     @Transient
     private BigDecimal sum;
 
+    public void addShare (Share share){
+
+        this.shares.add(share);
+    }
+
     public String getName() {
         return name;
     }
@@ -93,8 +98,10 @@ public class User {
         this.name = name;
         this.password = password;
         this.money = new BigDecimal(100000);
-        this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
-                "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
+//        this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
+//                "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
+
+        this.tickers = Arrays.asList("AAPL", "GOOG");
         this.enabled = true;
         this.role = "ROLE_USER";
     }

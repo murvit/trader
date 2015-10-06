@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Autowired
     EntityManager em;
+
 
     @Override
     public Share getShareById(int id) {
@@ -98,6 +100,8 @@ public class TraderDAOImpl implements TraderDAO {
 
     @Override
     public void buyShares(User user, String ticker, int quantity) {
+
+
         Query query = em.createQuery("SELECT s FROM Share s WHERE s.user=:user AND s.ticker = :ticker", Share.class);
         query.setParameter("user", user);
         query.setParameter("ticker", ticker);
@@ -114,7 +118,8 @@ public class TraderDAOImpl implements TraderDAO {
             share.setTicker(ticker);
             share.setQuantity(share.getQuantity() + quantity);
             share.setUser(user);
-            em.merge(share);
+            user.addShare(share);
+            em.persist(share);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
