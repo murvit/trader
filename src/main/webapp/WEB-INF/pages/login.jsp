@@ -58,7 +58,7 @@
             <ul class="pager">
                 <button type="submit" class="btn btn-primary btn-lg">Log in</button>
                 Or
-                <a class="btn btn-default btn-lg" href="/sign" role="button">Sign in</a>
+                <a class="btn btn-default btn-lg" href="/sign" role="button">Sign up</a>
             </ul>
 
         </form>
