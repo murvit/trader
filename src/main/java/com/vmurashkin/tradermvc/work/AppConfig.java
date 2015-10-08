@@ -54,6 +54,4 @@ public class AppConfig {
             EMFinstance = Persistence.createEntityManagerFactory("trader");
         return EMFinstance.createEntityManager();
     }
-
-
 }
