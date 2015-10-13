@@ -1,5 +1,6 @@
 package com.vmurashkin.tradermvc.entities;
 
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -28,7 +29,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Share> shares = new ArrayList<>();
 
-    @ElementCollection
+    @ElementCollection (fetch = FetchType.EAGER)
     private List<String> tickers = new ArrayList<>();
 
     private BigDecimal money;
@@ -39,7 +40,6 @@ public class User {
     public void addShare (Share share){
 
         this.shares.add(share);
-
     }
 
     public String getName() {
@@ -88,7 +88,7 @@ public class User {
 
     public void countSum() {
         BigDecimal sum = BigDecimal.ZERO;
-        for (Share share : shares) {
+        for (Share share : this.shares) {
             share.getAllData();
             sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
         }

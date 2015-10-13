@@ -29,7 +29,7 @@
 
     </tr>
     </thead>
-    <c:forEach items="${shares}" var="share">
+    <c:forEach items="${user.shares}" var="share">
         <tr>
 
             <td>${share.ticker}</td>

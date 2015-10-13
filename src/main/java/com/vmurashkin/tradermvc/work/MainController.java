@@ -2,17 +2,20 @@ package com.vmurashkin.tradermvc.work;
 
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,12 +29,11 @@ public class MainController {
     private TraderDAO traderDAO;// = new TraderDAOImpl();
 
     @RequestMapping({"/", "/hello"})
+    @Transactional
     public ModelAndView listShares() {
         User user = traderDAO.getCurrentUser();
-        List<Share> shares = traderDAO.getShareListByUser(user);
         user.countSum();
         ModelAndView modelAndView = new ModelAndView("hello");
-        modelAndView.addObject("shares", shares);
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -94,6 +96,7 @@ public class MainController {
     }
 
     @RequestMapping("/buyshare")
+    @Transactional
     public ModelAndView buyShare(@RequestParam(value = "quantity") int quantity,
                                  @RequestParam(value = "ticker") String ticker,
                                  HttpServletRequest request,

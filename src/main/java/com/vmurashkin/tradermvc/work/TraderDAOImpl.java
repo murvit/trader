@@ -3,13 +3,15 @@ package com.vmurashkin.tradermvc.work;
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
-import javax.persistence.Query;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class TraderDAOImpl implements TraderDAO {
 
-    @Autowired
+    @PersistenceContext
     EntityManager em;
 
     @Override
@@ -29,6 +31,7 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    @Transactional
     public Share getShareByTicker(User user, String ticker) {
         Share share = null;
         String name = user.getName();
@@ -43,6 +46,7 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    @Transactional
     public User getCurrentUser() {
         User user;
         String name;
@@ -56,15 +60,14 @@ public class TraderDAOImpl implements TraderDAO {
         return user;
     }
 
-
     @Override
+    @Transactional
     public void addUser(User user) {
-        em.getTransaction().begin();
         em.merge(user);
-        em.getTransaction().commit();
     }
 
     @Override
+    @Transactional
     public boolean isUserExist(String name) {
         if (name != null && !"".equals(name)) {
             User user = em.find(User.class, name);
@@ -88,6 +91,7 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    @Transactional
     public boolean buyShares(User user, String ticker, int quantity) {
 
         Share share = new Share(ticker);
@@ -111,16 +115,8 @@ public class TraderDAOImpl implements TraderDAO {
             user.setMoney(newMoney);
             user.addShare(share);
         }
-
-        try {
-            em.getTransaction().begin();
-            em.persist(user);
-            em.getTransaction().commit();
+            em.merge(user);
             return true;
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-            return false;
-        }
     }
 
     @Override
@@ -135,5 +131,4 @@ public class TraderDAOImpl implements TraderDAO {
 
     public TraderDAOImpl() {
     }
-
 }
