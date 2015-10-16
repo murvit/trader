@@ -7,7 +7,6 @@
     <version>1.0</version>
     <name>trader</name>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -22,12 +21,9 @@
         <springsecurity.version>4.0.2.RELEASE</springsecurity.version>
         <mysql.version>5.1.36</mysql.version>
 
-
     </properties>
 
-
     <dependencies>
-
 
         <!-- Spring -->
         <dependency>
@@ -109,6 +105,13 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
@@ -204,12 +207,15 @@
 
 
     </dependencies>
+
+    <!--
+
     <profiles>
         <profile>
-            <!-- When built in OpenShift the 'openshift' profile will be used when invoking mvn. -->
-            <!-- Use this profile for any OpenShift specific customization your app will need. -->
-            <!-- By default that is to put the resulting archive into the 'deployments' folder. -->
-            <!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
+            <!- When built in OpenShift the 'openshift' profile will be used when invoking mvn. ->
+            <!- Use this profile for any OpenShift specific customization your app will need. ->
+            <!- By default that is to put the resulting archive into the 'deployments' folder. ->
+            <!- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html ->
             <id>openshift</id>
             <build>
                 <finalName>trader</finalName>
@@ -228,4 +234,7 @@
             </build>
         </profile>
     </profiles>
+
+-->
+
 </project>
