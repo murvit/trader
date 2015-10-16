@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @Configuration
 @ComponentScan("com.vmurashkin.tradermvc")
 @EnableWebMvc
-@Import({AppSecurityConfig.class, JPAConfig.class})
+@Import({AppSecurityConfig.class, JPALocalConfig.class, JPAConfig.class})
 public class AppConfig {
 
     @Bean
