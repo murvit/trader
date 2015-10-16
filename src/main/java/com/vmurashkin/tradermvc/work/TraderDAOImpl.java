@@ -2,13 +2,9 @@ package com.vmurashkin.tradermvc.work;
 
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -17,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by OG_ML on 07.09.2015.
+ * Trader DAO impl
  */
 
 public class TraderDAOImpl implements TraderDAO {

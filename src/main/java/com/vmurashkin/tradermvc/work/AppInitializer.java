@@ -1,7 +1,7 @@
 package com.vmurashkin.tradermvc.work;
 
 /**
- * Created by OG_ML on 07.09.2015.
+ * Application initializer
  */
 
 

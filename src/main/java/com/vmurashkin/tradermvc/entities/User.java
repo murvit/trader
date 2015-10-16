@@ -1,17 +1,13 @@
 package com.vmurashkin.tradermvc.entities;
 
-import org.hibernate.Hibernate;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by OG_ML on 18.08.2015.
+ * User instance
  */
 
 @Entity
@@ -99,10 +95,9 @@ public class User {
         this.name = name;
         this.password = password;
         this.money = new BigDecimal(100000.00);
-//        this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
-//                "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
+        this.tickers = Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
+                "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM");
 
-        this.tickers = Arrays.asList("AAPL", "GOOG");
         this.enabled = true;
         this.role = "ROLE_USER";
     }

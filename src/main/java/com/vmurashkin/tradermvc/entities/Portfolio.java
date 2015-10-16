@@ -1,7 +1,7 @@
 package com.vmurashkin.tradermvc.entities;
 
 /**
- * Created by OG_ML on 18.08.2015.
+ * for future
  */
 //@Entity
 public class Portfolio {

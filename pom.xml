@@ -19,6 +19,7 @@
         <apachecommons.version>3.4</apachecommons.version>
         <apachehttpcomponents.version>4.5</apachehttpcomponents.version>
         <spring.version>4.2.0.RELEASE</spring.version>
+        <springsecurity.version>4.0.2.RELEASE</springsecurity.version>
         <mysql.version>5.1.36</mysql.version>
 
 
@@ -70,23 +71,23 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
-            <version>4.0.2.RELEASE</version>
+            <version>${springsecurity.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
-            <version>4.0.2.RELEASE</version>
+            <version>${springsecurity.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
-            <version>4.0.2.RELEASE</version>
+            <version>${springsecurity.version}</version>
         </dependency>
 
-
-        <!--- JBoss -->
+<!--
+        <!- JBoss ->
 
         <dependency>
             <groupId>org.jboss.spec</groupId>
@@ -96,13 +97,13 @@
             <scope>provided</scope>
         </dependency>
 
-        <!--- Log4J -->
+        <!- Log4J ->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
+-->
         <!-- Hibernate -->
 
         <dependency>
@@ -139,8 +140,8 @@
             <version>1.2</version>
         </dependency>
 
-
-        <!-- Validation -->
+<!--
+        <!- Validation ->
 
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -154,7 +155,7 @@
             <version>1.1.0.Final</version>
         </dependency>
 
-
+-->
         <!--    JSON Parsing   -->
 
         <dependency>
@@ -176,7 +177,9 @@
             <version>${apachehttpcomponents.version}</version>
         </dependency>
 
-        <!-- Joda time -->
+<!--
+
+        <!- Joda time ->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
@@ -188,6 +191,8 @@
             <artifactId>usertype.core</artifactId>
             <version>4.0.0.GA</version>
         </dependency>
+
+-->
 
         <!--Expression Language API -->
 

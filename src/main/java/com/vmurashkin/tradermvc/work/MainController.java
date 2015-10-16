@@ -2,7 +2,6 @@ package com.vmurashkin.tradermvc.work;
 
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,11 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Created by OG_ML on 07.09.2015.
+ * Main controller
  */
 
 @Controller

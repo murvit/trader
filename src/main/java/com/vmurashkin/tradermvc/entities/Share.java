@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * Created by OG_ML on 17.08.2015.
+ * Share instance
  */
 
 @Entity
@@ -65,6 +65,7 @@ public class Share {
 
         JsonElement jelement = new JsonParser().parse(json);
         JsonObject jobject = jelement.getAsJsonObject();
+//        System.out.println(jobject);
         jobject = jobject.getAsJsonObject("query");
         jobject = jobject.getAsJsonObject("results");
         jobject = jobject.getAsJsonObject("quote");

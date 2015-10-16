@@ -6,7 +6,7 @@ import com.vmurashkin.tradermvc.entities.User;
 import java.util.List;
 
 /**
- * Created by OG_ML on 07.09.2015.
+ * Trader DAO
  */
 public interface TraderDAO {
     User getCurrentUser();
@@ -19,5 +19,4 @@ public interface TraderDAO {
     boolean buyShares (User user, String ticker, int quantity);
     void sellShares (User user, String ticker, int quantity);
     void closeAll();
-
 }

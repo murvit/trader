@@ -26,11 +26,16 @@
 
         <form role="form" class="form-horizontal" action="/buyshare" method="post">
 
+            <ul class="pager">
+                <img src="http://chart.finance.yahoo.com/z?s=${ticker}&t=6m" alt="chart"/>
+            </ul>
+
             <div class="input-group" style="float:none; margin:0 auto">
 
                 <div class="input-group">
                     <span class="input-group-addon">@</span>
-                    <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Quantity" required pattern="^[ 0-9]+$">
+                    <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Quantity"
+                           required pattern="^[ 0-9]+$">
                 </div>
             </div>
 
@@ -44,6 +49,7 @@
             <ul class="pager">
                 <button type="submit" class="btn btn-primary btn-lg">Buy</button>
             </ul>
+
         </form>
     </div>
 </div>

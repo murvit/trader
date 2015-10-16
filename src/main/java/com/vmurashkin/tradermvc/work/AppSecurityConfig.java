@@ -1,6 +1,7 @@
 package com.vmurashkin.tradermvc.work;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,22 +10,24 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import javax.sql.DataSource;
 
 /**
- * Created by OG_ML on 08.09.2015.
+ * Spring security configuration
  */
 
+@Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
 
+
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select name,password, enabled from user where name=?")
+                        "select name,password, enabled from User where name=?")
                 .authoritiesByUsernameQuery(
-                        "select name, role from user where name=?");
+                        "select name, role from User where name=?");
     }
 
     @Override

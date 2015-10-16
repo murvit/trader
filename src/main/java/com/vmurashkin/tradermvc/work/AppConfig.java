@@ -3,6 +3,7 @@ package com.vmurashkin.tradermvc.work;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -18,13 +19,14 @@ import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
 
 /**
- * Created by OG_ML on 07.09.2015.
+ * Application configuration
  */
 
 @Configuration
 @ComponentScan("com.vmurashkin.tradermvc")
 @EnableWebMvc
 @EnableTransactionManagement
+@Import({AppSecurityConfig.class})
 public class AppConfig {
 
 //    private static EntityManagerFactory EMFinstance;
@@ -43,9 +45,16 @@ public class AppConfig {
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost:3306/trader");
+
+//        driverManagerDataSource.setUrl("jdbc:mysql://mysql22751-trader.unicloud.pl:3306/trader?characterEncoding=UTF-8");
+//        driverManagerDataSource.setUsername("root");
+//        driverManagerDataSource.setPassword("IOSfmx55982");
+
+
+        driverManagerDataSource.setUrl("jdbc:mysql://localhost/trader?characterEncoding=UTF-8");
         driverManagerDataSource.setUsername("testuser");
         driverManagerDataSource.setPassword("testpassword");
+
         return driverManagerDataSource;
     }
 
@@ -83,8 +92,8 @@ public class AppConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-//        properties.setProperty("hibernate.show_sql", "true");
-//        properties.setProperty("hibernate.format_sql", "true");
+        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.format_sql", "true");
         return properties;
     }
 
