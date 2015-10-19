@@ -114,12 +114,11 @@ public class MainController {
     }
 
     @RequestMapping("/sell")
-    public ModelAndView sellShares(@RequestParam(value = "id") int id) {
+    public ModelAndView sellShares(@RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
-        Share share = traderDAO.getShareById(id);
         ModelAndView modelAndView = new ModelAndView("sell");
         modelAndView.addObject("user", user);
-        modelAndView.addObject("share", share);
+        modelAndView.addObject("ticker", ticker);
         return modelAndView;
     }
 }

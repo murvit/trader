@@ -9,61 +9,69 @@
 </head>
 <body>
 
-<ul class="nav nav-pills">
-    <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
-    <li role="presentation"><a href="/analytic">Watchlist</a></li>
-    <li role="presentation"><a href="/logout">Logout</a></li>
-</ul>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">It's your portfolio. You may switch to Watchlist for analysis and purchase of
+            shares</h3>
+    </div>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
+    <div class="panel-body">
 
-        <td><b>Ticker</b></td>
-        <td><b>Name</b></td>
-        <td><b>Quantity</b></td>
-        <td><b>Price</b></td>
-        <td><b>Sum</b></td>
-        <td align = "center" colspan = "2"><b>Action</b></td>
+        <ul class="nav nav-pills">
+            <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
+            <li role="presentation"><a href="/analytic">Watchlist</a></li>
+            <li role="presentation"><a href="/logout">Logout</a></li>
+        </ul>
 
+        <table class="table table-striped">
+            <thead>
+            <tr>
 
-    </tr>
-    </thead>
-    <c:forEach items="${user.shares}" var="share">
-        <tr>
-
-            <td>${share.ticker}</td>
-            <td>${share.name}</td>
-            <td>${share.quantity}</td>
-            <td>${share.bid}</td>
-            <td>${share.bid*share.quantity}</td>
-            <td align = "center"><a href = "/buy?ticker=${share.ticker}">Buy</a></td>
-            <td align = "center"><a href = "/sell?ticker=${share.ticker}">Sell</a></td>
-
-        </tr>
-    </c:forEach>
-    <tr>
-        <td>Money</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>${user.money}</td>
-        <td></td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <td><b>TOTAL</b></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><b>${user.sum}</b></td>
-        <td></td>
-        <td></td>
-    </tr>
-
-</table>
+                <td><b>Ticker</b></td>
+                <td><b>Name</b></td>
+                <td><b>Quantity</b></td>
+                <td><b>Price</b></td>
+                <td><b>Sum</b></td>
+                <td align="center" colspan="2"><b>Action</b></td>
 
 
+            </tr>
+            </thead>
+            <c:forEach items="${user.shares}" var="share">
+                <tr>
+
+                    <td>${share.ticker}</td>
+                    <td>${share.name}</td>
+                    <td>${share.quantity}</td>
+                    <td>${share.bid}</td>
+                    <td>${share.bid*share.quantity}</td>
+                    <td align="center"><a href="/buy?ticker=${share.ticker}">Buy</a></td>
+                    <td align="center"><a href="/sell?ticker=${share.ticker}">Sell</a></td>
+
+                </tr>
+            </c:forEach>
+            <tr>
+                <td>Money</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>${user.money}</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+            <tr>
+                <td><b>TOTAL</b></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><b>${user.sum}</b></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
 </body>
 </html>
