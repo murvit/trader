@@ -2,7 +2,6 @@ package com.vmurashkin.tradermvc.work;
 
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TraderDAOImpl implements TraderDAO {
 
-    @PersistenceContext
+    @PersistenceContext //(type=PersistenceContextType.EXTENDED)
     EntityManager em;
 
     @Override
@@ -29,16 +29,12 @@ public class TraderDAOImpl implements TraderDAO {
     @Override
     @Transactional
     public Share getShareByTicker(User user, String ticker) {
-        Share share = null;
-        String name = user.getName();
-        Query query = em.createQuery("SELECT s FROM Share s WHERE s.ticker=:ticker AND s.user_name=:name ", Share.class);
-        query.setParameter("ticker", ticker);
-        try {
-            share = (Share) query.getSingleResult();
-        } catch (NoResultException | NonUniqueResultException e) {
-            e.printStackTrace();
+        for (Share current : user.getShares()) {
+            if (current.getTicker().equals(ticker)) {
+                return current;
+            }
         }
-        return share;
+        return new Share(ticker);
     }
 
     @Override
@@ -69,11 +65,6 @@ public class TraderDAOImpl implements TraderDAO {
             User user = em.find(User.class, name);
             return (user != null);
         } else return true;
-    }
-
-    @Override
-    public List<Share> getShareListByUser(User user) {
-        return user.getShares();
     }
 
     @Override
@@ -111,20 +102,37 @@ public class TraderDAOImpl implements TraderDAO {
             user.setMoney(newMoney);
             user.addShare(share);
         }
-            em.merge(user);
-            return true;
+        em.merge(user);
+        return true;
     }
 
     @Override
-    public void sellShares(User user, String ticker, int quantity) {
-    }
+    @Transactional
+    public boolean sellShares(User user, String ticker, int quantity) {
 
-    @Override
-    public void closeAll() {
-        em.close();
-        //   emf.close();
+        List<Share> shares = user.getShares();
+        Iterator<Share> iterator = shares.iterator();
+        boolean isPresent = false;
+        while (iterator.hasNext()) {
+            Share current = iterator.next();
+            if (current.getTicker().equals(ticker)) {
+                isPresent = true;
+                int newQuantity = current.getQuantity() - quantity;
+                if (newQuantity < 0) return false;
+                BigDecimal newMoney = user.getMoney().add(current.getCurrentBid().multiply(new BigDecimal(quantity)));
+                if (newQuantity == 0) {
+                    iterator.remove();
+                } else {
+                    current.setQuantity(newQuantity);
+                }
+                user.setMoney(newMoney);
+                break;
+            }
+        }
+        if (!isPresent) return false;
+        em.merge(user);
+        return true;
     }
-
     public TraderDAOImpl() {
     }
 }

@@ -8,17 +8,20 @@
 </head>
 <body>
 
-<ul class="nav nav-pills">
-    <li role="presentation"><a href="/hello">Portfolio</a></li>
-    <li role="presentation"><a href="/analytic">Analytic</a></li>
-    <li role="presentation"><a href="/logout">Logout</a></li>
-</ul>
-
-
-<div class="panel panel-default">
-    <div class="panel-heading">You may buy up to ... shares ${ticker}
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">You may buy up to ${quantity} shares ${ticker}</h3>
     </div>
+
     <div class="panel-body">
+
+        <ul class="nav nav-pills">
+            <li role="presentation"><a href="/hello">Portfolio</a></li>
+            <li role="presentation"><a href="/analytic">Analytic</a></li>
+            <li role="presentation"><a href="/logout">Logout</a></li>
+            <li role="presentation" class="active"><a href="">Buy</a></li>
+
+        </ul>
 
         <c:if test="${error!= null}">
             <div class="alert alert-danger" role="alert">Error! Something wrong!</div>
@@ -33,7 +36,7 @@
             <div class="input-group" style="float:none; margin:0 auto">
 
                 <div class="input-group">
-                    <span class="input-group-addon">@</span>
+                    <span class="input-group-addon">Up to ${quantity}</span>
                     <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Quantity"
                            required pattern="^[ 0-9]+$">
                 </div>
@@ -47,7 +50,7 @@
                    name="${_csrf.parameterName}"
                    value="${_csrf.token}"/>
             <ul class="pager">
-                <button type="submit" class="btn btn-primary btn-lg">Buy</button>
+                <button type="submit" class="btn btn-success btn-lg">Buy</button>
             </ul>
 
         </form>

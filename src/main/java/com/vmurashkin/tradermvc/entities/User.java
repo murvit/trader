@@ -22,10 +22,10 @@ public class User {
 
     private boolean enabled;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Share> shares = new ArrayList<>();
 
-    @ElementCollection (fetch = FetchType.EAGER)
+    @ElementCollection //(fetch = FetchType.EAGER)
     private List<String> tickers = new ArrayList<>();
 
     private BigDecimal money;
@@ -36,6 +36,10 @@ public class User {
     public void addShare (Share share){
 
         this.shares.add(share);
+    }
+
+    public void removeShare (Share share) {
+        this.shares.remove(share);
     }
 
     public String getName() {

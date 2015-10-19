@@ -13,10 +13,9 @@ public interface TraderDAO {
     public boolean isUserExist(String name);
     Share getShareById(int id);
     Share getShareByTicker (User user, String ticker);
-    List<Share> getShareListByUser(User user);
     List<Share> getWatchShareListByUser (User user);
     void addUser(User user);
     boolean buyShares (User user, String ticker, int quantity);
-    void sellShares (User user, String ticker, int quantity);
-    void closeAll();
+    boolean sellShares (User user, String ticker, int quantity);
+
 }

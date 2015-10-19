@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.List;
 
 /**
@@ -76,7 +78,7 @@ public class MainController {
 
         for (Share share : shares) {
             share.getAllData();
-            System.out.println(share.getTicker());
+//            System.out.println(share.getTicker());
         }
 
         ModelAndView modelAndView = new ModelAndView("analytic");
@@ -90,6 +92,8 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView("buy");
         modelAndView.addObject("user", user);
         modelAndView.addObject("ticker", ticker);
+        int quantity = user.getMoney().divide(new Share(ticker).getCurrentAsk(),BigDecimal.ROUND_DOWN).intValue();
+        modelAndView.addObject("quantity", quantity);
         return modelAndView;
     }
 
@@ -109,6 +113,8 @@ public class MainController {
             modelAndView.addObject("user", user);
             modelAndView.addObject("ticker", ticker);
             modelAndView.addObject("error", "error");
+            modelAndView.addObject("quantity",
+                    user.getMoney().divide(new Share(ticker).getCurrentAsk(),BigDecimal.ROUND_DOWN).intValue());
             return modelAndView;
         }
     }
@@ -119,6 +125,30 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView("sell");
         modelAndView.addObject("user", user);
         modelAndView.addObject("ticker", ticker);
+        modelAndView.addObject("quantity", traderDAO.getShareByTicker(user, ticker).getQuantity());
         return modelAndView;
     }
+
+    @RequestMapping("/sellshare")
+    @Transactional
+    public ModelAndView sellShare(@RequestParam(value = "quantity") int quantity,
+                                  @RequestParam(value = "ticker") String ticker,
+                                  HttpServletRequest request,
+                                  HttpServletResponse response) {
+        User user = traderDAO.getCurrentUser();
+        boolean success = traderDAO.sellShares(user, ticker, quantity);
+        if (success) {
+            return listShares();
+
+        } else {
+            ModelAndView modelAndView = new ModelAndView("sell");
+            modelAndView.addObject("user", user);
+            modelAndView.addObject("ticker", ticker);
+            modelAndView.addObject("error", "error");
+            modelAndView.addObject("quantity", traderDAO.getShareByTicker(user, ticker).getQuantity());
+            return modelAndView;
+        }
+    }
+
+
 }
