@@ -28,7 +28,10 @@ public class JPAConfig {
 
 //        driverManagerDataSource.setUrl("jdbc:mysql://mysql22751-trader.unicloud.pl:3306/trader?characterEncoding=UTF-8");
 //        driverManagerDataSource.setUsername("root");
-//        driverManagerDataSource.setPassword("IOSfmx55982");
+//        driverManagerDataSource.setPassword("***");
+
+
+
 
         driverManagerDataSource.setUrl("jdbc:mysql://localhost/trader?characterEncoding=UTF-8");
         driverManagerDataSource.setUsername("testuser");

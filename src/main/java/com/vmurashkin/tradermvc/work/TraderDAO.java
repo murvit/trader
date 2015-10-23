@@ -10,12 +10,22 @@ import java.util.List;
  */
 public interface TraderDAO {
     User getCurrentUser();
-    public boolean isUserExist(String name);
-    Share getShareById(int id);
-    Share getShareByTicker (User user, String ticker);
-    List<Share> getWatchShareListByUser (User user);
-    void addUser(User user);
-    boolean buyShares (User user, String ticker, int quantity);
-    boolean sellShares (User user, String ticker, int quantity);
 
+    boolean isUserExist(String name);
+
+    Share getShareById(int id);
+
+    Share getShareByTicker(User user, String ticker);
+
+    List<Share> getWatchShareListByUser(User user);
+
+    void addUser(User user);
+
+    boolean buyShares(User user, String ticker, int quantity);
+
+    boolean sellShares(User user, String ticker, int quantity);
+
+    void removeTicker(User user, String ticker);
+
+    void restoreTickers(User user);
 }

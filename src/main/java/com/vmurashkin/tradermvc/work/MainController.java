@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.List;
 
 /**
@@ -78,7 +77,6 @@ public class MainController {
 
         for (Share share : shares) {
             share.getAllData();
-//            System.out.println(share.getTicker());
         }
 
         ModelAndView modelAndView = new ModelAndView("analytic");
@@ -156,18 +154,24 @@ public class MainController {
         }
     }
 
-    @RequestMapping("/watchshare")
+    @RequestMapping("/remove")
     @Transactional
-    public ModelAndView watchShare(@RequestParam(value = "ticker") String ticker,
+    public ModelAndView removeTicker (@RequestParam(value = "ticker") String ticker,
                                    HttpServletRequest request,
                                    HttpServletResponse response) {
 
         User user = traderDAO.getCurrentUser();
-
-        ModelAndView modelAndView = new ModelAndView("share");
-        Share share  = new Share(ticker);
-        share.getAllData();
-        modelAndView.addObject("share", share);
-        return modelAndView;
+        traderDAO.removeTicker(user, ticker);
+        return analytic();
     }
+
+    @RequestMapping("/restore")
+    @Transactional
+    public ModelAndView restoreTickers() {
+
+        User user = traderDAO.getCurrentUser();
+        traderDAO.restoreTickers(user);
+        return analytic();
+    }
+
 }

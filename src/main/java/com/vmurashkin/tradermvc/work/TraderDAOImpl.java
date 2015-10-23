@@ -6,7 +6,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,7 +20,7 @@ import java.util.List;
 public class TraderDAOImpl implements TraderDAO {
 
     @PersistenceContext //(type=PersistenceContextType.EXTENDED)
-    EntityManager em;
+            EntityManager em;
 
     @Override
     public Share getShareById(int id) {
@@ -133,6 +134,23 @@ public class TraderDAOImpl implements TraderDAO {
         em.merge(user);
         return true;
     }
+
     public TraderDAOImpl() {
+    }
+
+    @Override
+    @Transactional
+    public void removeTicker(User user, String ticker) {
+        List<String> tickers = user.getTickers();
+        tickers.remove(ticker);
+        user.setTickers(tickers);
+        em.merge(user);
+    }
+
+    @Override
+    @Transactional
+    public void restoreTickers(User user) {
+        user.setTickers();
+        em.merge(user);
     }
 }

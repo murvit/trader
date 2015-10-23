@@ -48,6 +48,7 @@
                 </tr>
             </c:forEach>
         </table>
+        <a href="/restore">Restore tickers</a>
     </div>
 </div>
 </body>
