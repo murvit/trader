@@ -30,9 +30,6 @@ public class JPAConfig {
 //        driverManagerDataSource.setUsername("root");
 //        driverManagerDataSource.setPassword("***");
 
-
-
-
         driverManagerDataSource.setUrl("jdbc:mysql://localhost/trader?characterEncoding=UTF-8");
         driverManagerDataSource.setUsername("testuser");
         driverManagerDataSource.setPassword("testpassword");
