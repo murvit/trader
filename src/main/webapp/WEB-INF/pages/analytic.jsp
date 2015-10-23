@@ -29,10 +29,7 @@
                 <td><b>Name</b></td>
                 <td><b>Bid</b></td>
                 <td><b>Ask</b></td>
-                <td><b>1 Y target</b></td>
-                <td><b>Year low</b></td>
-                <td><b>Year High</b></td>
-                <td><b>MCap</b></td>
+
                 <td colspan="2" align="center"><b>Action</b></td>
 
             </tr>
@@ -40,15 +37,11 @@
             <c:forEach items="${shares}" var="share">
                 <tr>
 
-                    <td><a href="/watchshare?ticker=${share.ticker}">${share.ticker}</a></td>
+                    <td><a href="/buy?ticker=${share.ticker}">${share.ticker}</a></td>
  <!--                   <td>${share.ticker}</td>   -->
                     <td>${share.name}</td>
                     <td>${share.bid}</td>
                     <td>${share.ask}</td>
-                    <td>${share.oneYearTargetPrice}</td>
-                    <td>${share.yearLow}</td>
-                    <td>${share.yearHigh}</td>
-                    <td>${share.marketCapitalization}</td>
                     <td align="center"><a href="/buy?ticker=${share.ticker}">Buy</a></td>
                     <td align="center"><a href="/remove?ticker=${share.ticker}">Remove</a></td>
 

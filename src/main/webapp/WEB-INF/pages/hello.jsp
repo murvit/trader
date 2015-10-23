@@ -40,7 +40,7 @@
             <c:forEach items="${user.shares}" var="share">
                 <tr>
 
-                    <td><a href="/watchshare?ticker=${share.ticker}">${share.ticker}</a></td>
+                    <td><a href="/buy?ticker=${share.ticker}">${share.ticker}</a></td>
                     <td>${share.name}</td>
                     <td>${share.quantity}</td>
                     <td>${share.bid}</td>

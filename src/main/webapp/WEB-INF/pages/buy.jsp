@@ -17,7 +17,7 @@
 
         <ul class="nav nav-pills">
             <li role="presentation"><a href="/hello">Portfolio</a></li>
-            <li role="presentation"><a href="/analytic">Analytic</a></li>
+            <li role="presentation"><a href="/analytic">Watchlist</a></li>
             <li role="presentation" class="active"><a href="">Buy</a></li>
 
         </ul>
@@ -27,6 +27,35 @@
         </c:if>
 
         <form role="form" class="form-horizontal" action="/buyshare" method="post">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+
+                    <td><b>Ticker</b></td>
+                    <td><b>Name</b></td>
+                    <td><b>Bid</b></td>
+                    <td><b>Ask</b></td>
+                    <td><b>1 Y target</b></td>
+                    <td><b>Year low</b></td>
+                    <td><b>Year High</b></td>
+                    <td><b>MCap</b></td>
+
+                </tr>
+                </thead>
+                <tr>
+
+                    <td>${share.ticker}</td>
+                    <td>${share.name}</td>
+                    <td>${share.bid}</td>
+                    <td>${share.ask}</td>
+                    <td>${share.oneYearTargetPrice}</td>
+                    <td>${share.yearLow}</td>
+                    <td>${share.yearHigh}</td>
+                    <td>${share.marketCapitalization}</td>
+
+                </tr>
+            </table>
 
             <ul class="pager">
                 <img src="http://chart.finance.yahoo.com/z?s=${ticker}&t=6m" alt="chart"/>

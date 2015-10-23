@@ -35,25 +35,28 @@
                 <td><b>Year High</b></td>
                 <td><b>MCap</b></td>
 
-
             </tr>
             </thead>
-                <tr>
+            <tr>
 
-                    <td>${share.ticker}</td>
-                    <td>${share.name}</td>
-                    <td>${share.bid}</td>
-                    <td>${share.ask}</td>
-                    <td>${share.oneYearTargetPrice}</td>
-                    <td>${share.yearLow}</td>
-                    <td>${share.yearHigh}</td>
-                    <td>${share.marketCapitalization}</td>
+                <td>${share.ticker}</td>
+                <td>${share.name}</td>
+                <td>${share.bid}</td>
+                <td>${share.ask}</td>
+                <td>${share.oneYearTargetPrice}</td>
+                <td>${share.yearLow}</td>
+                <td>${share.yearHigh}</td>
+                <td>${share.marketCapitalization}</td>
 
-                </tr>
+            </tr>
         </table>
 
         <ul class="pager">
             <img src="http://chart.finance.yahoo.com/z?s=${share.ticker}&t=6m" alt="chart"/>
+        </ul>
+
+        <ul class="pager">
+            <a class="btn btn-success btn-lg" href="/buy?ticker=${share.ticker}" role="button">Buy</a>
         </ul>
 
     </div>

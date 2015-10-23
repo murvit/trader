@@ -94,6 +94,9 @@ public class MainController {
         modelAndView.addObject("ticker", ticker);
         int quantity = user.getMoney().divide(new Share(ticker).getCurrentAsk(),BigDecimal.ROUND_DOWN).intValue();
         modelAndView.addObject("quantity", quantity);
+        Share share  = new Share(ticker);
+        share.getAllData();
+        modelAndView.addObject("share", share);
         return modelAndView;
     }
 
@@ -126,6 +129,9 @@ public class MainController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("ticker", ticker);
         modelAndView.addObject("quantity", traderDAO.getShareByTicker(user, ticker).getQuantity());
+        Share share  = new Share(ticker);
+        share.getAllData();
+        modelAndView.addObject("share", share);
         return modelAndView;
     }
 
@@ -156,11 +162,12 @@ public class MainController {
                                    HttpServletRequest request,
                                    HttpServletResponse response) {
 
+        User user = traderDAO.getCurrentUser();
+
         ModelAndView modelAndView = new ModelAndView("share");
         Share share  = new Share(ticker);
         share.getAllData();
         modelAndView.addObject("share", share);
         return modelAndView;
     }
-
 }
