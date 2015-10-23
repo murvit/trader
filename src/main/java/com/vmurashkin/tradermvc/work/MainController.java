@@ -150,5 +150,17 @@ public class MainController {
         }
     }
 
+    @RequestMapping("/watchshare")
+    @Transactional
+    public ModelAndView watchShare(@RequestParam(value = "ticker") String ticker,
+                                   HttpServletRequest request,
+                                   HttpServletResponse response) {
+
+        ModelAndView modelAndView = new ModelAndView("share");
+        Share share  = new Share(ticker);
+        share.getAllData();
+        modelAndView.addObject("share", share);
+        return modelAndView;
+    }
 
 }

@@ -11,15 +11,16 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title">It's your watched shares. Here you may buy shares or remove them from watchlist</h3>
+        <h3 class="panel-title">Info about share ${share.ticker}</h3>
     </div>
 
     <div class="panel-body">
 
         <ul class="nav nav-pills">
             <li role="presentation"><a href="/hello">Portfolio</a></li>
-            <li role="presentation" class="active"><a href="/analytic">Watchlist</a></li>
+            <li role="presentation"><a href="/analytic">Watchlist</a></li>
             <li role="presentation"><a href="/logout">Logout</a></li>
+            <li role="presentation" class="active"><a href="">Share info</a></li>
         </ul>
 
         <table class="table table-striped">
@@ -34,15 +35,13 @@
                 <td><b>Year low</b></td>
                 <td><b>Year High</b></td>
                 <td><b>MCap</b></td>
-                <td colspan="2" align="center"><b>Action</b></td>
+
 
             </tr>
             </thead>
-            <c:forEach items="${shares}" var="share">
                 <tr>
 
-                    <td><a href="/watchshare?ticker=${share.ticker}">${share.ticker}</a></td>
- <!--                   <td>${share.ticker}</td>   -->
+                    <td>${share.ticker}</td>
                     <td>${share.name}</td>
                     <td>${share.bid}</td>
                     <td>${share.ask}</td>
@@ -50,12 +49,14 @@
                     <td>${share.yearLow}</td>
                     <td>${share.yearHigh}</td>
                     <td>${share.marketCapitalization}</td>
-                    <td align="center"><a href="/buy?ticker=${share.ticker}">Buy</a></td>
-                    <td align="center"><a href="/remove?ticker=${share.ticker}">Remove</a></td>
 
                 </tr>
-            </c:forEach>
         </table>
+
+        <ul class="pager">
+            <img src="http://chart.finance.yahoo.com/z?s=${share.ticker}&t=6m" alt="chart"/>
+        </ul>
+
     </div>
 </div>
 </body>

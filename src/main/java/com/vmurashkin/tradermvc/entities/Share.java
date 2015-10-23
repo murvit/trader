@@ -74,15 +74,15 @@ public class Share {
 
     public void getAllData() {
         JsonObject jobject = this.getJson();
-        try{
-        this.setName(jobject.getAsJsonPrimitive("Name").getAsString());
-        this.setAsk(new BigDecimal(jobject.getAsJsonPrimitive("Ask").getAsString()));
-        this.setBid(new BigDecimal(jobject.getAsJsonPrimitive("Bid").getAsString()));
-        this.setYearLow(new BigDecimal(jobject.getAsJsonPrimitive("YearLow").getAsString()));
-        this.setYearHigh(new BigDecimal(jobject.getAsJsonPrimitive("YearHigh").getAsString()));
-        this.setMarketCapitalization(jobject.getAsJsonPrimitive("MarketCapitalization").getAsString());
-        this.setOneYearTargetPrice(new BigDecimal(jobject.getAsJsonPrimitive("OneyrTargetPrice").getAsString()));}
-        catch (Exception e) {
+        try {
+            this.setName(jobject.getAsJsonPrimitive("Name").getAsString());
+            this.setAsk(new BigDecimal(jobject.getAsJsonPrimitive("Ask").getAsString()));
+            this.setBid(new BigDecimal(jobject.getAsJsonPrimitive("Bid").getAsString()));
+            this.setYearLow(new BigDecimal(jobject.getAsJsonPrimitive("YearLow").getAsString()));
+            this.setYearHigh(new BigDecimal(jobject.getAsJsonPrimitive("YearHigh").getAsString()));
+            this.setMarketCapitalization(jobject.getAsJsonPrimitive("MarketCapitalization").getAsString());
+            this.setOneYearTargetPrice(new BigDecimal(jobject.getAsJsonPrimitive("OneyrTargetPrice").getAsString()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

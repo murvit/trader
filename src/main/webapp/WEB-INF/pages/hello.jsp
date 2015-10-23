@@ -12,7 +12,7 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">It's your portfolio. You may switch to Watchlist for analysis and purchase of
-            shares</h3>
+            shares. </h3>
     </div>
 
     <div class="panel-body">
@@ -40,7 +40,7 @@
             <c:forEach items="${user.shares}" var="share">
                 <tr>
 
-                    <td>${share.ticker}</td>
+                    <td><a href="/watchshare?ticker=${share.ticker}">${share.ticker}</a></td>
                     <td>${share.name}</td>
                     <td>${share.quantity}</td>
                     <td>${share.bid}</td>
