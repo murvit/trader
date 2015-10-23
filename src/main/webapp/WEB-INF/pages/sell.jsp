@@ -16,7 +16,6 @@
         <ul class="nav nav-pills">
             <li role="presentation"><a href="/hello">Portfolio</a></li>
             <li role="presentation"><a href="/analytic">Analytic</a></li>
-            <li role="presentation"><a href="/logout">Logout</a></li>
             <li role="presentation" class="active"><a href="">Sell</a></li>
 
         </ul>

@@ -1,7 +1,7 @@
 package com.vmurashkin.tradermvc.entities;
 
 /**
- * for future
+ * for future, not functional
  */
 //@Entity
 public class Portfolio {

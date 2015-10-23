@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * for future
+ * for future, not functional
  */
 
 //@Entity
