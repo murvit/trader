@@ -88,7 +88,8 @@ public class TraderDAOImpl implements TraderDAO {
     public void countSum(User user, List<Share> shares) {
         BigDecimal sum = BigDecimal.ZERO;
         for (Share share : shares) {
-            sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
+            if (share.getBid() != null)
+                sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
         }
         sum = sum.add(user.getMoney());
         user.setSum(sum);
@@ -179,24 +180,28 @@ public class TraderDAOImpl implements TraderDAO {
     public void setShareData(Share share) {
         List<Share> shares = Arrays.asList(share);
         JsonObject jsonObject = getJsonObject(shares);
-        jsonObject = jsonObject.getAsJsonObject("quote");
-        setShareDataFromJsonObject(jsonObject, share);
+        if (jsonObject != null) {
+            jsonObject = jsonObject.getAsJsonObject("quote");
+            setShareDataFromJsonObject(jsonObject, share);
+        }
     }
 
     public void setSharesData(List<Share> shares) {
         JsonObject jsonObject = getJsonObject(shares);
-        JsonArray jsonArray = jsonObject.getAsJsonArray("quote");
-        for (JsonElement jsonElement : jsonArray) {
-            jsonObject = jsonElement.getAsJsonObject();
-            try {
-                for (Share share : shares) {
-                    if (jsonObject.getAsJsonPrimitive("Symbol").getAsString().equals(share.getTicker())) {
-                        setShareDataFromJsonObject(jsonObject, share);
-                        break;
+        if (jsonObject != null) {
+            JsonArray jsonArray = jsonObject.getAsJsonArray("quote");
+            for (JsonElement jsonElement : jsonArray) {
+                jsonObject = jsonElement.getAsJsonObject();
+                try {
+                    for (Share share : shares) {
+                        if (jsonObject.getAsJsonPrimitive("Symbol").getAsString().equals(share.getTicker())) {
+                            setShareDataFromJsonObject(jsonObject, share);
+                            break;
+                        }
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
@@ -204,8 +209,12 @@ public class TraderDAOImpl implements TraderDAO {
     public void setShareDataFromJsonObject(JsonObject jsonObject, Share share) {
         share.setTicker(jsonObject.getAsJsonPrimitive("Symbol").getAsString());
         share.setName(jsonObject.getAsJsonPrimitive("Name").getAsString());
-        share.setAsk(new BigDecimal(jsonObject.getAsJsonPrimitive("Ask").getAsString()));
-        share.setBid(new BigDecimal(jsonObject.getAsJsonPrimitive("Bid").getAsString()));
+        JsonElement je = jsonObject.getAsJsonPrimitive("Ask");
+        if (!je.isJsonNull())
+            share.setAsk(new BigDecimal(je.getAsString()));
+        je = jsonObject.getAsJsonPrimitive("Bid");
+        if (!je.isJsonNull())
+            share.setBid(new BigDecimal(je.getAsString()));
         share.setYearLow(new BigDecimal(jsonObject.getAsJsonPrimitive("YearLow").getAsString()));
         share.setYearHigh(new BigDecimal(jsonObject.getAsJsonPrimitive("YearHigh").getAsString()));
         share.setMarketCapitalization(jsonObject.getAsJsonPrimitive("MarketCapitalization").getAsString());
@@ -215,7 +224,6 @@ public class TraderDAOImpl implements TraderDAO {
     public JsonObject getJsonObject(List<Share> shares) {
 
         String request = setRequest(shares);
-
         String json = null;
         try (CloseableHttpClient httpClient = HttpClients.createDefault();) {
             HttpGet httpRequest = new HttpGet(request);
@@ -225,11 +233,14 @@ public class TraderDAOImpl implements TraderDAO {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JsonElement jsonElement = new JsonParser().parse(json);
-        JsonObject jsonObject = jsonElement.getAsJsonObject();
-        jsonObject = jsonObject.getAsJsonObject("query");
-        jsonObject = jsonObject.getAsJsonObject("results");
-        return jsonObject;
+        if (json != null && !json.equals("")) {
+            JsonElement jsonElement = new JsonParser().parse(json);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            jsonObject = jsonObject.getAsJsonObject("query");
+            jsonObject = jsonObject.getAsJsonObject("results");
+            return jsonObject;
+        }
+        return null;
     }
 
     public String setRequest(List<Share> shares) {
