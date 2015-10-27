@@ -1,6 +1,5 @@
 package com.vmurashkin.tradermvc.work;
 
-import com.google.gson.JsonObject;
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
 
@@ -11,15 +10,16 @@ import java.util.List;
  */
 
 public interface TraderDAO {
+
     User getCurrentUser();
+
+    void addUser(User user);
 
     boolean isUserExist(String name);
 
     Share getShareByTicker(User user, String ticker);
 
     List<Share> getWatchShareListByUser(User user);
-
-    void addUser(User user);
 
     void countSum(User user, List<Share> shares);
 

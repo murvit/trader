@@ -58,7 +58,6 @@ public class MainController {
     public ModelAndView sign() {
         return new ModelAndView("sign");
     }
-
     @RequestMapping("/adduser")
     public String addUser(@RequestParam(value = "name") String name,
                           @RequestParam(value = "password") String password,
@@ -99,9 +98,7 @@ public class MainController {
     @RequestMapping("/buyshare")
     @Transactional
     public ModelAndView buyShare(@RequestParam(value = "quantity") int quantity,
-                                 @RequestParam(value = "ticker") String ticker,
-                                 HttpServletRequest request,
-                                 HttpServletResponse response) {
+                                 @RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
         boolean success = traderDAO.buyShares(user, ticker, quantity);
         if (success) {
@@ -136,9 +133,7 @@ public class MainController {
     @RequestMapping("/sellshare")
     @Transactional
     public ModelAndView sellShare(@RequestParam(value = "quantity") int quantity,
-                                  @RequestParam(value = "ticker") String ticker,
-                                  HttpServletRequest request,
-                                  HttpServletResponse response) {
+                                  @RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
         boolean success = traderDAO.sellShares(user, ticker, quantity);
         if (success) {
@@ -156,10 +151,7 @@ public class MainController {
 
     @RequestMapping("/remove")
     @Transactional
-    public ModelAndView removeTicker(@RequestParam(value = "ticker") String ticker,
-                                     HttpServletRequest request,
-                                     HttpServletResponse response) {
-
+    public ModelAndView removeTicker(@RequestParam(value = "ticker") String ticker) {
         User user = traderDAO.getCurrentUser();
         traderDAO.removeTicker(user, ticker);
         return analytic();
@@ -168,7 +160,6 @@ public class MainController {
     @RequestMapping("/restore")
     @Transactional
     public ModelAndView restoreTickers() {
-
         User user = traderDAO.getCurrentUser();
         traderDAO.restoreTickers(user);
         return analytic();

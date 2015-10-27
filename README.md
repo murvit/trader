@@ -1,4 +1,4 @@
 Project trader
 
-find it on
-http://trader.unicloud.pl
+You may find it on
+http://trader.mycloud.by
