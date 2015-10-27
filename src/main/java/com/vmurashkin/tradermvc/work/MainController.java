@@ -25,15 +25,18 @@ import java.util.List;
 @RequestMapping("/")
 public class MainController {
     @Autowired
-    private TraderDAO traderDAO;// = new TraderDAOImpl();
+    private TraderDAO traderDAO;
 
     @RequestMapping({"/", "/hello"})
     @Transactional
     public ModelAndView listShares() {
         User user = traderDAO.getCurrentUser();
-        user.countSum();
+        List<Share> shares = user.getShares();
+        traderDAO.setData(shares);
+        traderDAO.countSum(user, shares);
         ModelAndView modelAndView = new ModelAndView("hello");
         modelAndView.addObject("user", user);
+        modelAndView.addObject("shares", shares);
         return modelAndView;
     }
 
@@ -71,14 +74,9 @@ public class MainController {
 
     @RequestMapping("/analytic")
     public ModelAndView analytic() {
-
         User user = traderDAO.getCurrentUser();
         List<Share> shares = traderDAO.getWatchShareListByUser(user);
-
-        for (Share share : shares) {
-            share.getAllData();
-        }
-
+        traderDAO.setData(shares);
         ModelAndView modelAndView = new ModelAndView("analytic");
         modelAndView.addObject("shares", shares);
         return modelAndView;
@@ -90,10 +88,10 @@ public class MainController {
         ModelAndView modelAndView = new ModelAndView("buy");
         modelAndView.addObject("user", user);
         modelAndView.addObject("ticker", ticker);
-        int quantity = user.getMoney().divide(new Share(ticker).getCurrentAsk(),BigDecimal.ROUND_DOWN).intValue();
+        Share share = new Share(ticker);
+        traderDAO.setShareData(share);
+        int quantity = user.getMoney().divide(share.getAsk(), BigDecimal.ROUND_DOWN).intValue();
         modelAndView.addObject("quantity", quantity);
-        Share share  = new Share(ticker);
-        share.getAllData();
         modelAndView.addObject("share", share);
         return modelAndView;
     }
@@ -114,8 +112,10 @@ public class MainController {
             modelAndView.addObject("user", user);
             modelAndView.addObject("ticker", ticker);
             modelAndView.addObject("error", "error");
+            Share share = new Share(ticker);
+            traderDAO.setShareData(share);
             modelAndView.addObject("quantity",
-                    user.getMoney().divide(new Share(ticker).getCurrentAsk(),BigDecimal.ROUND_DOWN).intValue());
+                    user.getMoney().divide(share.getAsk(), BigDecimal.ROUND_DOWN).intValue());
             return modelAndView;
         }
     }
@@ -127,8 +127,8 @@ public class MainController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("ticker", ticker);
         modelAndView.addObject("quantity", traderDAO.getShareByTicker(user, ticker).getQuantity());
-        Share share  = new Share(ticker);
-        share.getAllData();
+        Share share = new Share(ticker);
+        traderDAO.setShareData(share);
         modelAndView.addObject("share", share);
         return modelAndView;
     }
@@ -156,9 +156,9 @@ public class MainController {
 
     @RequestMapping("/remove")
     @Transactional
-    public ModelAndView removeTicker (@RequestParam(value = "ticker") String ticker,
-                                   HttpServletRequest request,
-                                   HttpServletResponse response) {
+    public ModelAndView removeTicker(@RequestParam(value = "ticker") String ticker,
+                                     HttpServletRequest request,
+                                     HttpServletResponse response) {
 
         User user = traderDAO.getCurrentUser();
         traderDAO.removeTicker(user, ticker);
@@ -173,5 +173,4 @@ public class MainController {
         traderDAO.restoreTickers(user);
         return analytic();
     }
-
 }

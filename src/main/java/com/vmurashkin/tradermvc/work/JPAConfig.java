@@ -14,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
 
 /**
- * Created by OG_ML on 16.10.2015.
+ * JPA Configuration
  */
 
 @Configuration
@@ -41,7 +41,7 @@ public class JPAConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan(new String[] { "com.vmurashkin.tradermvc" });
+        em.setPackagesToScan("com.vmurashkin.tradermvc");
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

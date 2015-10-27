@@ -1,6 +1,7 @@
 package com.vmurashkin.tradermvc.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 
 @Entity
-public class User {
+public class User implements Serializable{
 
     @Id
     private String name;
@@ -26,7 +27,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true)
     private List<Share> shares = new ArrayList<>();
 
-    @ElementCollection //(fetch = FetchType.EAGER)
+    @ElementCollection
     private List<String> tickers = new ArrayList<>();
 
     private BigDecimal money;
@@ -85,15 +86,6 @@ public class User {
 
     public void setSum(BigDecimal sum) {
         this.sum = sum;
-    }
-
-    public void countSum() {
-        BigDecimal sum = BigDecimal.ZERO;
-        for (Share share : this.shares) {
-            share.getAllData();
-            sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
-        }
-        this.sum=sum.add(this.getMoney());
     }
 
     public User(String name, String password) {

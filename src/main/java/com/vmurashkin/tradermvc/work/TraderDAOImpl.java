@@ -1,15 +1,27 @@
 package com.vmurashkin.tradermvc.work;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.vmurashkin.tradermvc.entities.Share;
 import com.vmurashkin.tradermvc.entities.User;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,16 +31,10 @@ import java.util.List;
 
 public class TraderDAOImpl implements TraderDAO {
 
-    @PersistenceContext //(type=PersistenceContextType.EXTENDED)
-            EntityManager em;
+    @PersistenceContext
+    EntityManager em;
 
     @Override
-    public Share getShareById(int id) {
-        return em.find(Share.class, id);
-    }
-
-    @Override
-    @Transactional
     public Share getShareByTicker(User user, String ticker) {
         for (Share current : user.getShares()) {
             if (current.getTicker().equals(ticker)) {
@@ -79,11 +85,21 @@ public class TraderDAOImpl implements TraderDAO {
     }
 
     @Override
+    public void countSum(User user, List<Share> shares) {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Share share : shares) {
+            sum = sum.add(share.getBid().multiply(new BigDecimal(share.getQuantity())));
+        }
+        sum = sum.add(user.getMoney());
+        user.setSum(sum);
+    }
+
+    @Override
     @Transactional
     public boolean buyShares(User user, String ticker, int quantity) {
 
         Share share = new Share(ticker);
-        share.setAsk(share.getCurrentAsk());
+        setShareData(share);
         share.setQuantity(quantity);
         share.setUser(user);
 
@@ -118,9 +134,10 @@ public class TraderDAOImpl implements TraderDAO {
             Share current = iterator.next();
             if (current.getTicker().equals(ticker)) {
                 isPresent = true;
+                setShareData(current);
                 int newQuantity = current.getQuantity() - quantity;
                 if (newQuantity < 0) return false;
-                BigDecimal newMoney = user.getMoney().add(current.getCurrentBid().multiply(new BigDecimal(quantity)));
+                BigDecimal newMoney = user.getMoney().add(current.getBid().multiply(new BigDecimal(quantity)));
                 if (newQuantity == 0) {
                     iterator.remove();
                 } else {
@@ -135,15 +152,10 @@ public class TraderDAOImpl implements TraderDAO {
         return true;
     }
 
-    public TraderDAOImpl() {
-    }
-
     @Override
     @Transactional
     public void removeTicker(User user, String ticker) {
-        List<String> tickers = user.getTickers();
-        tickers.remove(ticker);
-        user.setTickers(tickers);
+        user.getTickers().remove(ticker);
         em.merge(user);
     }
 
@@ -152,5 +164,81 @@ public class TraderDAOImpl implements TraderDAO {
     public void restoreTickers(User user) {
         user.setTickers();
         em.merge(user);
+    }
+
+    @Override
+    public void setData(List<Share> shares) {
+        if (shares.size() < 1) return;
+        if (shares.size() == 1)
+            setShareData(shares.get(0));
+        else
+            setSharesData(shares);
+    }
+
+    @Override
+    public void setShareData(Share share) {
+        List<Share> shares = Arrays.asList(share);
+        JsonObject jsonObject = getJsonObject(shares);
+        jsonObject = jsonObject.getAsJsonObject("quote");
+        setShareDataFromJsonObject(jsonObject, share);
+    }
+
+    public void setSharesData(List<Share> shares) {
+        JsonObject jsonObject = getJsonObject(shares);
+        JsonArray jsonArray = jsonObject.getAsJsonArray("quote");
+        for (JsonElement jsonElement : jsonArray) {
+            jsonObject = jsonElement.getAsJsonObject();
+            try {
+                for (Share share : shares) {
+                    if (jsonObject.getAsJsonPrimitive("Symbol").getAsString().equals(share.getTicker())) {
+                        setShareDataFromJsonObject(jsonObject, share);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setShareDataFromJsonObject(JsonObject jsonObject, Share share) {
+        share.setTicker(jsonObject.getAsJsonPrimitive("Symbol").getAsString());
+        share.setName(jsonObject.getAsJsonPrimitive("Name").getAsString());
+        share.setAsk(new BigDecimal(jsonObject.getAsJsonPrimitive("Ask").getAsString()));
+        share.setBid(new BigDecimal(jsonObject.getAsJsonPrimitive("Bid").getAsString()));
+        share.setYearLow(new BigDecimal(jsonObject.getAsJsonPrimitive("YearLow").getAsString()));
+        share.setYearHigh(new BigDecimal(jsonObject.getAsJsonPrimitive("YearHigh").getAsString()));
+        share.setMarketCapitalization(jsonObject.getAsJsonPrimitive("MarketCapitalization").getAsString());
+        share.setOneYearTargetPrice(new BigDecimal(jsonObject.getAsJsonPrimitive("OneyrTargetPrice").getAsString()));
+    }
+
+    public JsonObject getJsonObject(List<Share> shares) {
+
+        String request = setRequest(shares);
+
+        String json = null;
+        try (CloseableHttpClient httpClient = HttpClients.createDefault();) {
+            HttpGet httpRequest = new HttpGet(request);
+            HttpResponse response = httpClient.execute(httpRequest);
+            HttpEntity entity = response.getEntity();
+            json = EntityUtils.toString(entity);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        JsonElement jsonElement = new JsonParser().parse(json);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        jsonObject = jsonObject.getAsJsonObject("query");
+        jsonObject = jsonObject.getAsJsonObject("results");
+        return jsonObject;
+    }
+
+    public String setRequest(List<Share> shares) {
+        StringBuilder requestSB = new StringBuilder("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(");
+        for (Share share : shares) {
+            requestSB.append("%22").append(share.getTicker()).append("%22,");
+        }
+        requestSB.setLength(requestSB.length() - 1);
+        requestSB.append(")%20&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+        return requestSB.toString();
     }
 }

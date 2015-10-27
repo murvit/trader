@@ -37,7 +37,7 @@
 
             </tr>
             </thead>
-            <c:forEach items="${user.shares}" var="share">
+            <c:forEach items="${shares}" var="share">
                 <tr>
 
                     <td><a href="/buy?ticker=${share.ticker}">${share.ticker}</a></td>
