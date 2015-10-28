@@ -58,6 +58,7 @@ public class MainController {
     public ModelAndView sign() {
         return new ModelAndView("sign");
     }
+
     @RequestMapping("/adduser")
     public String addUser(@RequestParam(value = "name") String name,
                           @RequestParam(value = "password") String password,
@@ -164,4 +165,6 @@ public class MainController {
         traderDAO.restoreTickers(user);
         return analytic();
     }
+
+
 }
