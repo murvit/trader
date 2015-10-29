@@ -10,71 +10,73 @@
 
 </head>
 <body>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">This is your portfolio. You may switch to Watchlist for analysis and buy shares. </h3>
+        </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">It's your portfolio. You may switch to Watchlist for analysis and purchase of
-            shares. </h3>
-    </div>
+        <div class="panel-body">
 
-    <div class="panel-body">
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
+                <li role="presentation"><a href="/analytic">Watchlist</a></li>
+                <li role="presentation"><a href="/logout">Logout</a></li>
+            </ul>
 
-        <ul class="nav nav-pills">
-            <li role="presentation" class="active"><a href="/hello">Portfolio</a></li>
-            <li role="presentation"><a href="/analytic">Watchlist</a></li>
-            <li role="presentation"><a href="/logout">Logout</a></li>
-        </ul>
-
-        <table class="table table-striped">
-            <thead>
-            <tr>
-
-                <td><b>Ticker</b></td>
-                <td><b>Name</b></td>
-                <td><b>Quantity</b></td>
-                <td><b>Price</b></td>
-                <td><b>Sum</b></td>
-                <td align="center" colspan="2"><b>Action</b></td>
-
-
-            </tr>
-            </thead>
-            <c:forEach items="${shares}" var="share">
+            <table class="table table-striped">
+                <thead>
                 <tr>
 
-                    <td><a href="/buy?ticker=${share.ticker}">${share.ticker}</a></td>
-                    <td>${share.name}</td>
-                    <td>${share.quantity}</td>
-                    <td>${share.bid}</td>
-                    <td>${share.bid*share.quantity}</td>
-                    <td align="center"><a href="/buy?ticker=${share.ticker}">Buy</a></td>
-                    <td align="center"><a href="/sell?ticker=${share.ticker}">Sell</a></td>
+                    <td><b>Ticker</b></td>
+                    <td><b>Name</b></td>
+                    <td><b>Quantity</b></td>
+                    <td><b>Price</b></td>
+                    <td><b>Sum</b></td>
+                    <td align="center" colspan="2"><b>Action</b></td>
+
 
                 </tr>
-            </c:forEach>
-            <tr>
-                <td>Money</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>${user.money}</td>
-                <td></td>
-                <td></td>
-            </tr>
+                </thead>
+                <c:forEach items="${shares}" var="share">
+                    <tr>
 
-            <tr>
-                <td><b>TOTAL</b></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><b>${user.sum}</b></td>
-                <td></td>
-                <td></td>
-            </tr>
+                        <td><a href="/buy?ticker=${share.ticker}">${share.ticker}</a></td>
+                        <td>${share.name}</td>
+                        <td>${share.quantity}</td>
+                        <td>${share.bid}</td>
+                        <td>${share.bid*share.quantity}</td>
+                        <td align="center"><a href="/buy?ticker=${share.ticker}">Buy</a></td>
+                        <td align="center"><a href="/sell?ticker=${share.ticker}">Sell</a></td>
 
-        </table>
+                    </tr>
+                </c:forEach>
+                <tr>
+                    <td>Money</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>${user.money}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><b>TOTAL</b></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><b>${user.sum}</b></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
     </div>
-
+    <div class="container">
+        <footer>
+            <p>&copy; Vitaly Murashkin 2015</p>
+        </footer>
+    </div>
 </div>
 </body>
 </html>
