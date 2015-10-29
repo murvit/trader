@@ -33,18 +33,18 @@ public class AppConfig extends WebMvcConfigurationSupport {
         return resolver;
     }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-    }
-
-    @Override
-    @Bean
-    public HandlerMapping resourceHandlerMapping() {
-        AbstractHandlerMapping handlerMapping = (AbstractHandlerMapping) super.resourceHandlerMapping();
-        handlerMapping.setOrder(-1);
-        return handlerMapping;
-    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+//    }
+//
+//    @Override
+//    @Bean
+//    public HandlerMapping resourceHandlerMapping() {
+//        AbstractHandlerMapping handlerMapping = (AbstractHandlerMapping) super.resourceHandlerMapping();
+//        handlerMapping.setOrder(-1);
+//        return handlerMapping;
+//    }
 
     @Bean
     public TraderDAO traderDAO() {
