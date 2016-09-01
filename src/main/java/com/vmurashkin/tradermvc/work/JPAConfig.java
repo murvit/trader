@@ -31,8 +31,8 @@ public class JPAConfig {
 //        driverManagerDataSource.setPassword("***");
 
         driverManagerDataSource.setUrl("jdbc:mysql://localhost/trader?characterEncoding=UTF-8");
-        driverManagerDataSource.setUsername("testuser");
-        driverManagerDataSource.setPassword("testpassword");
+        driverManagerDataSource.setUsername("test");
+        driverManagerDataSource.setPassword("pass");
 
         return driverManagerDataSource;
     }
