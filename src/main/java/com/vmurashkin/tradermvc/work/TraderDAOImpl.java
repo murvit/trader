@@ -225,7 +225,7 @@ public class TraderDAOImpl implements TraderDAO {
 
         String request = setRequest(shares);
         String json = null;
-        try (CloseableHttpClient httpClient = HttpClients.createDefault();) {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpGet httpRequest = new HttpGet(request);
             HttpResponse response = httpClient.execute(httpRequest);
             HttpEntity entity = response.getEntity();
