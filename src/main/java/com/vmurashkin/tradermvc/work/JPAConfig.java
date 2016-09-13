@@ -1,7 +1,11 @@
 package com.vmurashkin.tradermvc.work;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -19,20 +23,52 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
+@ComponentScan("com.vmurashkin.tradermvc")
+@PropertySource("classpath:application.properties")
 public class JPAConfig {
 
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+    // inject properties
+    @Value("${jdbc.driver}")
+    private String jdbcDriver;
+    @Value("${jdbc.url}")
+    private String jdbcURL;
+    @Value("${jdbc.username}")
+    private String jdbcUsername;
+    @Value("${jdbc.password}")
+    private String jdbcPassword;
+
+
+    @Value("${hibernate.dialect}")
+    private String sqlDialect;
+    @Value("${hbm2ddl.auto}")
+    private String hbm2dllAuto;
+
+/*    @Value("${connection.charset}")
+    private String connectionCharset;
+    @Value("${connection.release}")
+    private String connectionRelease;
+    @Value("${validation.mode}")
+    private String validationMode;
+*/
     @Bean//(name = "dataSource")
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
 
-//        driverManagerDataSource.setUrl("jdbc:mysql://mysql27704-trader.mycloud.by/trader?characterEncoding=UTF-8");
-//        driverManagerDataSource.setUsername("root");
-//        driverManagerDataSource.setPassword("***");
+//        driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+//        driverManagerDataSource.setUrl("jdbc:mysql://localhost/trader?characterEncoding=UTF-8");
+//        driverManagerDataSource.setUsername("test");
+//        driverManagerDataSource.setPassword("pass");
 
-        driverManagerDataSource.setUrl("jdbc:mysql://localhost/trader?characterEncoding=UTF-8");
-        driverManagerDataSource.setUsername("test");
-        driverManagerDataSource.setPassword("pass");
+        driverManagerDataSource.setDriverClassName(jdbcDriver);
+        driverManagerDataSource.setUrl(jdbcURL);
+        driverManagerDataSource.setUsername(jdbcUsername);
+        driverManagerDataSource.setPassword(jdbcPassword);
 
         return driverManagerDataSource;
     }
@@ -57,8 +93,8 @@ public class JPAConfig {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.hbm2ddl.auto", hbm2dllAuto);
+        properties.setProperty("hibernate.dialect", sqlDialect);
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
         properties.setProperty("hibernate.enable_lazy_load_no_trans", "true");

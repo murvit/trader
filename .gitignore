@@ -8,3 +8,4 @@ out
 gen
 target
 # Created by .ignore support plugin (hsz.mobi)
+/src/main/resources/application.properties

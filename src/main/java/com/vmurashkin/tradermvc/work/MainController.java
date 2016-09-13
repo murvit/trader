@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/")
+// @RequestMapping("/")
 public class MainController {
     @Autowired
     private TraderDAO traderDAO;
