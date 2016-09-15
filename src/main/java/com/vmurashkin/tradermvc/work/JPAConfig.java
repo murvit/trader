@@ -23,7 +23,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("com.vmurashkin.tradermvc")
+//@ComponentScan("com.vmurashkin.tradermvc")
 @PropertySource("classpath:application.properties")
 public class JPAConfig {
 
@@ -49,13 +49,7 @@ public class JPAConfig {
     @Value("${hbm2ddl.auto}")
     private String hbm2dllAuto;
 
-/*    @Value("${connection.charset}")
-    private String connectionCharset;
-    @Value("${connection.release}")
-    private String connectionRelease;
-    @Value("${validation.mode}")
-    private String validationMode;
-*/
+
     @Bean//(name = "dataSource")
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
