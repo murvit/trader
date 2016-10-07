@@ -101,7 +101,7 @@ public class User implements Serializable{
     }
 
     public void setTickers(){
-        this.tickers = new LinkedList<>(Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "EBAY", "MCD", "KO", "PEP", "GE",
+        this.tickers = new LinkedList<>(Arrays.asList("AAPL", "GOOG", "FB", "MSFT", "AMZN", "MCD", "KO", "PEP", "GE",
                 "BA", "JNJ", "PFE", "XOM", "CVX", "T", "BAC", "JPM"));
     }
 
